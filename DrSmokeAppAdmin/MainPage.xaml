@@ -1,0 +1,51 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="DrSmokeAppAdmin.MainPage">
+
+    <ScrollView>
+        <VerticalStackLayout
+            Padding="30,0"
+            Spacing="25">
+            <Image
+                Source="logodrsmoke_new.webp"
+                HeightRequest="185"
+                Aspect="AspectFit"
+                SemanticProperties.Description="Image logo dr smoke" />
+
+            <Button
+                Text="Inscription"
+                Clicked="OnButtonInscription"
+                />
+            <StackLayout Padding="20" x:Name="formulaireInscription" IsVisible="false">
+                <Label Text="Inscription" FontSize="Title" HorizontalOptions="Center" Margin="0,20,0,20"/>
+
+                <Entry Placeholder="Adresse email" x:Name="EmailEntryInscription" Keyboard="Email" Margin="0,0,0,10"/>
+                <Entry Placeholder="Mot de passe" x:Name="PasswordEntryInscription" IsPassword="True" Margin="0,0,0,10"/>
+                <Entry Placeholder="Nom" x:Name="Nom" Margin="0,0,0,10"/>
+                <Entry Placeholder="Prénom" x:Name="Prenom" Margin="0,0,0,10"/>
+                <Entry Placeholder="Code postal" x:Name="CodePostalEntry" Keyboard="Numeric" Margin="0,0,0,10"/>
+                <Entry Placeholder="Adresse" x:Name="AdresseEntry" Margin="0,0,0,10"/>
+                <Entry Placeholder="Entrez le nom de votre ville" x:Name="VilleEntry" Margin="0,0,0,10" />
+
+                <Button Text="S'inscrire" Clicked="OnInscriptionnRegistrer" HorizontalOptions="FillAndExpand" Margin="0,20,0,0"/>
+            </StackLayout>
+
+
+            <Button
+                Text="Connexion"
+                Clicked="OnButtonConnexion"
+                />
+
+            <StackLayout Padding="20" x:Name="formulaireConnexion" IsVisible="false">
+                <Label Text="Inscription" FontSize="Title" HorizontalOptions="Center" Margin="0,20,0,20"/>
+
+                <Entry Placeholder="Adresse email" x:Name="EmailEntryConnexion" Keyboard="Email" Margin="0,0,0,10"/>
+                <Entry Placeholder="Mot de passe" x:Name="PasswordEntryConnexion" IsPassword="True" Margin="0,0,0,10"/>
+
+                <Button Text="S'inscrire" Clicked="OnConnexionRegistrer" HorizontalOptions="FillAndExpand" Margin="0,20,0,0"/>
+            </StackLayout>
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>

@@ -62,12 +62,14 @@ public partial class StockAdmin : ContentPage
                     
                 } catch (Exception ex)
                 {
+                    generateProduitWithNoProduit();
                     await DisplayAlert("Alert", $"Une erreur est survenue: {ex.ToString()}", "OK");
                 }
             }
         }
         catch (Exception ex)
         {
+            generateProduitWithNoProduit();
             await DisplayAlert("Alert", ex.ToString(), "OK");
 
         }
@@ -166,6 +168,7 @@ public partial class StockAdmin : ContentPage
             }
         };
         Button button = new Button { Text = "Ajouter un produit" };
+        button.Clicked += async (sender, e) => { await Navigation.PushModalAsync(new AjoutProduit());  };
         grid.Add(titleLabel);
         grid.Add(scrollView, 0, 1);
         grid.Add(button, 0, 2);

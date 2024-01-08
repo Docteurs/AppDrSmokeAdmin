@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="DrSmokeAppAdmin.Pages.AjoutProduit"
+             Title="AjoutProduit">
+    <ScrollView>
+        <VerticalStackLayout>
+
+            <Image Source="logodrsmoke_new.webp" WidthRequest="250" HeightRequest="250" Margin="20, 20, 20, 20" />
+
+
+            <Frame Padding="20" CornerRadius="10" BorderColor="Green"  Margin="20, 20, 20, 20">
+                <Image x:Name="myImageControl"/>
+            </Frame>
+            
+            <Frame BackgroundColor="#F5F5F5" Padding="20" CornerRadius="10" HasShadow="True">
+                <Button Text="Sélectionner un fichier"
+                    BackgroundColor="#DDDDDD"
+                    TextColor="#333333"
+                    Padding="10"
+                    Clicked="PickAndShow"
+                    />
+            </Frame>
+            
+            <Entry Placeholder="Nom du produit" IsSpellCheckEnabled="false" />
+            <Picker x:Name="picker"
+                Title="Selectionnez une categorie">
+                <Picker.ItemsSource>
+                    <x:Array Type="{x:Type x:String}">
+                        <x:String>fleurs-cbd-indoor</x:String>
+                        <x:String>fleurs-cbd-greenhouse</x:String>
+                        <x:String>fleurs-cbd-outdoor</x:String>
+                        <x:String>moonrocks</x:String>
+                        <x:String>Fleurs PHC/H4CBD</x:String>
+                        <x:String>resines-cbd</x:String>
+                        <x:String>huiles-cbd</x:String>
+                        <x:String>infusions</x:String>
+                        <x:String>vaporisateurs</x:String>
+                        <x:String>cartouches-cbd-cigarette-electronique</x:String>
+                        <x:String>e-liquides-cbd</x:String>
+                        <x:String>pre-rolls</x:String>
+                        <x:String>feuille-a-rouler</x:String>
+                        <x:String>dr-drink</x:String>
+                        <x:String>stick-cbd</x:String>
+                        <x:String>bonbons-cbd</x:String>
+                    </x:Array>
+                </Picker.ItemsSource>
+            </Picker>
+            <Entry Placeholder="Descriptif du produit" IsSpellCheckEnabled="false" />
+            <Entry Placeholder="Quantite en grammes" Keyboard="Numeric"
+                Text="{Binding IntegerValue, Mode=TwoWay}" />
+            <StackLayout Orientation="Horizontal">
+                <CheckBox x:Name="checkBox1g" VerticalOptions="Center" />
+                <Label Text="1g" VerticalOptions="Center">
+                    <Label.Triggers>
+                        <DataTrigger TargetType="Label"
+                            Binding="{Binding Source={x:Reference checkBox1g}, Path=IsChecked}"
+                            Value="true">
+                            <Setter Property="FontAttributes"
+                            Value="Italic, Bold" />
+                            <Setter Property="FontSize"
+                            Value="18" />
+                        </DataTrigger>
+                    </Label.Triggers>
+                </Label>
+            </StackLayout>
+            <StackLayout Orientation="Horizontal">
+                <CheckBox x:Name="checkBox3g" VerticalOptions="Center" />
+                <Label Text="3g" VerticalOptions="Center">
+                    <Label.Triggers>
+                        <DataTrigger TargetType="Label"
+                     Binding="{Binding Source={x:Reference checkBox1g}, Path=IsChecked}"
+                     Value="true">
+                            <Setter Property="FontAttributes"
+                    Value="Italic, Bold" />
+                            <Setter Property="FontSize"
+                    Value="18" />
+                        </DataTrigger>
+                    </Label.Triggers>
+                </Label>
+            </StackLayout>
+            <StackLayout Orientation="Horizontal">
+                <CheckBox x:Name="checkBox5g" VerticalOptions="Center" />
+                <Label Text="5g" VerticalOptions="Center">
+                    <Label.Triggers>
+                        <DataTrigger TargetType="Label"
+                     Binding="{Binding Source={x:Reference checkBox1g}, Path=IsChecked}"
+                     Value="true">
+                            <Setter Property="FontAttributes"
+                    Value="Italic, Bold" />
+                            <Setter Property="FontSize"
+                    Value="18" />
+                        </DataTrigger>
+                    </Label.Triggers>
+                </Label>
+            </StackLayout>
+            <StackLayout Orientation="Horizontal">
+                <CheckBox x:Name="checkBox10g" VerticalOptions="Center" />
+                <Label Text="10g" VerticalOptions="Center">
+                    <Label.Triggers>
+                        <DataTrigger TargetType="Label"
+                            Binding="{Binding Source={x:Reference checkBox1g}, Path=IsChecked}"
+                            Value="true">
+                            <Setter Property="FontAttributes"
+                            Value="Italic, Bold" />
+                            <Setter Property="FontSize"
+                            Value="18" />
+                        </DataTrigger>
+                    </Label.Triggers>
+                </Label>
+            </StackLayout>
+            <StackLayout Orientation="Horizontal">
+                <CheckBox x:Name="checkBox20g" VerticalOptions="Center" />
+                <Label Text="20g" VerticalOptions="Center">
+                    <Label.Triggers>
+                        <DataTrigger TargetType="Label"
+                            Binding="{Binding Source={x:Reference checkBox1g}, Path=IsChecked}"
+                            Value="true">
+                            <Setter Property="FontAttributes"
+                            Value="Italic, Bold" />
+                            <Setter Property="FontSize"
+                            Value="18" />
+                        </DataTrigger>
+                    </Label.Triggers>
+                </Label>
+            </StackLayout>
+
+            <Entry Placeholder="Prix 1g" Keyboard="Numeric"
+                Text="{Binding IntegerValue, Mode=TwoWay}" />
+            <Entry Placeholder="Prix 3g" Keyboard="Numeric"
+                Text="{Binding IntegerValue, Mode=TwoWay}" />
+            <Entry Placeholder="Prix 5g" Keyboard="Numeric"
+                Text="{Binding IntegerValue, Mode=TwoWay}" />
+            <Entry Placeholder="Prix 10g" Keyboard="Numeric"
+                Text="{Binding IntegerValue, Mode=TwoWay}" />
+            <Entry Placeholder="Prix 20g" Keyboard="Numeric"
+                Text="{Binding IntegerValue, Mode=TwoWay}" />
+
+            <Button Text="Ajouter le produit" />
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

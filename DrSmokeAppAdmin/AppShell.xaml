@@ -18,10 +18,10 @@
             <ShellContent ContentTemplate="{DataTemplate local:MainPage}" Route="MainPage" />
         </Tab>
         <Tab Title="Shop" Icon="shop_icon.png" >
-            <ShellContent ContentTemplate="{DataTemplate local:Pages.GestionBoutiqueAdmin}" Route="MainPage" />
+            <ShellContent ContentTemplate="{DataTemplate local:Pages.GestionBoutiqueAdmin}" Route="GestionBoutiqueAdmin" />
         </Tab>
         <Tab Title="Produit" Icon="stock_icon.png" >
-            <ShellContent ContentTemplate="{DataTemplate local:Pages.StockAdmin}" Route="MainPage" />
+            <ShellContent ContentTemplate="{DataTemplate local:Pages.StockAdmin}" Route="StockAdmin" />
         </Tab>
     </TabBar>
 </Shell>

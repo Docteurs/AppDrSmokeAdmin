@@ -136,7 +136,9 @@ namespace DrSmokeAppAdmin
                         var apiResponse = JsonSerializer.Deserialize<Models.ReponseAPI>(responseContent);
                         await DisplayAlert("Alert", $"Test ${apiResponse.message} ", "ok");
                         await SecureStorage.Default.SetAsync("oauth_token", apiResponse.token);
-                        await Navigation.PushAsync(new Pages.GestionBoutiqueAdmin());
+                        //await Navigation.PushAsync(new Pages.GestionBoutiqueAdmin());
+                        await Shell.Current.GoToAsync("//GestionBoutiqueAdmin");
+
                     }
                     else
                     {

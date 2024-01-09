@@ -90,7 +90,7 @@ public partial class StockAdmin : ContentPage
         {
             Text = "Ajouter un produit",
         };
-
+       
         StackLayout stackContent = new StackLayout();
 
         // Créer les labels et les ajouter au StackLayout
@@ -133,9 +133,10 @@ public partial class StockAdmin : ContentPage
         grid.Add(titleLabel);
         grid.Add(scrollView, 0, 1);
         grid.Add(button, 0, 2);
+        
 
         button.Clicked += async (sender, args) => await DisplayAlert("Alert", "Clicked", "OK");
-
+        
         Content = grid;
     }
 
@@ -167,11 +168,18 @@ public partial class StockAdmin : ContentPage
                 new RowDefinition { Height = new GridLength(0, GridUnitType.Auto) }
             }
         };
+        Button deconnexion = new Button
+        {
+            Text = "Deconnexion"
+        };
+
         Button button = new Button { Text = "Ajouter un produit" };
         button.Clicked += async (sender, e) => { await Navigation.PushModalAsync(new AjoutProduit());  };
+        deconnexion.Clicked += async (sender, e) => { await Navigation.PushModalAsync(new MainPage()); };
         grid.Add(titleLabel);
         grid.Add(scrollView, 0, 1);
         grid.Add(button, 0, 2);
+        grid.Add(deconnexion, 0, 3);
 
         Content = grid;
     }

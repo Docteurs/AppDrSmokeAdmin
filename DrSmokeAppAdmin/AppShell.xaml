@@ -14,7 +14,7 @@
 
 
     <TabBar  x:Name="myTabBar">
-        <Tab Title="Home" Icon="home_icon.png" >
+        <Tab Title="Home" Icon="home_icon.png" x:Name="test" >
             <ShellContent ContentTemplate="{DataTemplate local:MainPage}" Route="MainPage" />
         </Tab>
         <Tab Title="Shop" Icon="shop_icon.png" >

@@ -11,7 +11,7 @@ public partial class GestionBoutiqueAdmin : ContentPage
 	{
 		InitializeComponent();
         InfoMagasin();
-        genereGridAdmin("stephane@gmail.com", "Theiabut", "Stephane", "11 av general lecelerc", "06190", "logodrsmoke_new.webp", "Roquebrune-cap-martin");
+        // genereGridAdmin("stephane@gmail.com", "Theiabut", "Stephane", "11 av general lecelerc", "06190", "logodrsmoke_new.webp", "Roquebrune-cap-martin");
     }
     async private protected void InfoMagasin()
     {
@@ -75,40 +75,82 @@ public partial class GestionBoutiqueAdmin : ContentPage
         Label titleLabel = new Label
         {
             Text = "Gestion Magasin",
-            // More properties set here to define the Label appearance
+            FontSize = 20,
+            HorizontalOptions = LayoutOptions.Center,
+            Margin = new Thickness(0, 10)
         };
 
-        StackLayout stackLayout = new StackLayout();
-        stackLayout.Add(new Image { Source = imgSource });
-        stackLayout.Add(new Label { Text = email });
-        stackLayout.Add(new Label { Text = nom });
-        stackLayout.Add(new Label { Text= prenom });
-        stackLayout.Add(new Label { Text = adresse });
-        stackLayout.Add(new Label { Text = codePostal });
-        
-        stackLayout.Add(new Label { Text = ville });
-        // More Label objects go here
+        Image pageImage = new Image
+        {
+            Source = "logodrsmoke_new.webp", // Remplacez "chemin_de_votre_image" par le chemin de votre image
+            WidthRequest = 400, // Ajustez la taille de l'image selon vos besoins
+            HeightRequest = 400,
+            Aspect = Aspect.AspectFill,
+            HorizontalOptions = LayoutOptions.Center,
+            VerticalOptions = LayoutOptions.Center,
+            Margin = new Thickness(0, 40) // Ajoutez de la marge en haut pour aérer visuellement
+        };
 
-        ScrollView scrollView = new ScrollView();
-        scrollView.Content = stackLayout;
-        // ...
+        Image cardImage = new Image
+        {
+            Source = imgSource,
+            WidthRequest = 400, // Ajustez la taille de l'image selon vos besoins
+            HeightRequest = 400,
+            Aspect = Aspect.AspectFill
+        };
 
-        Title = "ScrollView as a child layout demo";
-        Grid grid = new Grid
+        Label emailLabel = new Label { Text = email };
+        Label nomLabel = new Label { Text = nom };
+        Label prenomLabel = new Label { Text = prenom };
+        Label adresseLabel = new Label { Text = adresse };
+        Label codePostalLabel = new Label { Text = codePostal };
+        Label villeLabel = new Label { Text = ville };
+        Microsoft.Maui.Controls.Button modifierBoutique = new Microsoft.Maui.Controls.Button { Text = "Modifier ma boutique" };
+        // Add more Label objects as needed
+
+        StackLayout cardContent = new StackLayout
         {
             Margin = new Thickness(20),
-            RowDefinitions =
+            Spacing = 10,
+            Children =
+        {
+            titleLabel,
+            cardImage,
+            emailLabel,
+            nomLabel,
+            prenomLabel,
+            adresseLabel,
+            codePostalLabel,
+            villeLabel,
+            modifierBoutique
+            // Add more Label objects here
+        }
+        };
+
+        Frame cardFrame = new Frame
+        {
+            Content = cardContent,
+            CornerRadius = 10,
+            Padding = new Thickness(10),
+            HasShadow = true,
+            HorizontalOptions = LayoutOptions.Center
+        };
+
+        ScrollView scrollView = new ScrollView
+        {
+            Content = new StackLayout
             {
-                new RowDefinition { Height = new GridLength(0, GridUnitType.Auto) },
-                new RowDefinition { Height = new GridLength(1, GridUnitType.Star) },
-                new RowDefinition { Height = new GridLength(0, GridUnitType.Auto) }
+                Children =
+            {
+                pageImage,
+                cardFrame
+            }
             }
         };
-        grid.Add(titleLabel);
-        grid.Add(scrollView, 0, 1);
-        // grid.Add(button, 0, 2);
 
-        Content = grid;
+        Content = scrollView;
+        //modifierBoutique += async (sender, e) => { await DisplayAlert("Alert", "Clicked", "OK") };
+        modifierBoutique.Clicked += async (sender, args) => await DisplayAlert("Alert", "Clicked", "OK");
     }
 
 }

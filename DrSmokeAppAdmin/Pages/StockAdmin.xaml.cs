@@ -12,21 +12,21 @@ namespace DrSmokeAppAdmin.Pages;
 
 public partial class StockAdmin : ContentPage
 {
-	public StockAdmin()
-	{
-		InitializeComponent();
+    public StockAdmin()
+    {
+        InitializeComponent();
         BlackCatPage();
-        
+
     }
 
     async public void BlackCatPage()
     {
-       
+
         HttpClient _client;
         JsonSerializerOptions _serializerOptions;
         // string descriptif = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum";
         // List<Models.ProduitAdmin> listProduit = new List<Models.ProduitAdmin>();
-        
+
         _client = new HttpClient();
         _serializerOptions = new JsonSerializerOptions
         {
@@ -49,23 +49,64 @@ public partial class StockAdmin : ContentPage
                 {
                     var items = JsonSerializer.Deserialize<List<Models.ProduitAdmin>>(content, _serializerOptions);
                     Items.AddRange(items);
+                    var stack = new StackLayout();
+                    var scrollView = new ScrollView();
+
                     if (items.Count > 0)
                     {
                         foreach (var item in items)
                         {
-                            generateProduitAdminWithStock(item.CategorieProduit, item.NomProduit, item.Descriptif, item.Quantite, item.UnGprix, item.ImgProduit);
+                            var labelCategorie = new Label { Text = item.CategorieProduit, FontFamily = "Pacifico" };
+                            var labelNom = new Label { Text = item.NomProduit, FontAttributes = FontAttributes.Bold, FontSize = 15, Margin = new Thickness(0, 5, 0, 5) };
+                            var labelDescriptif = new Label { Text = item.Descriptif, FontFamily = "Pacifico" };
+                            var labelQuantite = new Label { Text = item.Quantite.ToString() + "g/En stock", FontFamily = "Pacifico", Margin = new Thickness(0, 5, 0, 5) };
+                            var labelPrix = new Label { Text = item.UnGprix.ToString() + "€/1g", FontFamily = "Pacifico", Margin = new Thickness(0, 5, 0, 5) };
+                            await DisplayAlert("Alert", item.ImgProduit, "ok");
+                            Microsoft.Maui.Controls.Image cardImage = new Microsoft.Maui.Controls.Image
+                            {
+                                Source = $"{item.ImgProduit}",
+                                WidthRequest = 200, // Ajustez la taille de l'image selon vos besoins
+                                HeightRequest = 200,
+                                Aspect = Aspect.AspectFill
+                            };
+
+                            var stackContent = new StackLayout();
+                            stackContent.Children.Add(cardImage);
+                            stackContent.Children.Add(labelCategorie);
+                            stackContent.Children.Add(labelNom);
+                            stackContent.Children.Add(labelDescriptif);
+                            stackContent.Children.Add(labelQuantite);
+                            stackContent.Children.Add(labelPrix);
+
+                            var card = new Frame
+                            {
+                                BorderColor = Colors.Black,
+                                Content = stackContent,
+                                CornerRadius = 10,
+                                Padding = new Thickness(10),
+                                HasShadow = true,
+                                HorizontalOptions = LayoutOptions.Center,
+                                VerticalOptions = LayoutOptions.Center
+                            };
+
+                            stack.Children.Add(card);
                         }
-                    } else
+
+                        scrollView.Content = stack;
+                        Content = scrollView;
+                    }
+                    else
                     {
                         generateProduitWithNoProduit();
                     }
-                    
-                } catch (Exception ex)
+                }
+                catch (Exception ex)
                 {
                     generateProduitWithNoProduit();
                     await DisplayAlert("Alert", $"Une erreur est survenue: {ex.ToString()}", "OK");
                 }
             }
+
         }
         catch (Exception ex)
         {
@@ -75,7 +116,7 @@ public partial class StockAdmin : ContentPage
         }
 
 
-        
+
 
     }
     public void generateProduitAdminWithStock(string CategorieProduit, string NomProduit, string Descriptif, int Quantite, decimal UnGprix, string ImgProduit)
@@ -90,7 +131,7 @@ public partial class StockAdmin : ContentPage
         {
             Text = "Ajouter un produit",
         };
-       
+
         StackLayout stackContent = new StackLayout();
 
         // Créer les labels et les ajouter au StackLayout
@@ -99,7 +140,7 @@ public partial class StockAdmin : ContentPage
         var labelDescriptif = new Label { Text = Descriptif, FontFamily = "Pacifico" };
         var labelQuantite = new Label { Text = Quantite.ToString() + "g/En stock", FontFamily = "Pacifico", Margin = new Thickness(0, 5, 0, 5) };
         var labelPrix = new Label { Text = UnGprix.ToString() + "€/1g", FontFamily = "Pacifico", Margin = new Thickness(0, 5, 0, 5) };
-        var image = new Microsoft.Maui.Controls.Image { Source = ImgProduit };
+        var image = new Microsoft.Maui.Controls.Image { Source = ImgProduit.ToString(), WidthRequest = 400, HeightRequest = 400 };
 
         stackContent.Children.Add(image);
         stackContent.Children.Add(labelCategorie);
@@ -112,33 +153,44 @@ public partial class StockAdmin : ContentPage
         Frame frame = new Frame()
         {
             BorderColor = Colors.Black,
-            Content = stackContent // Assigner le StackLayout comme contenu du Frame
+            Content = stackContent, // Assigner le StackLayout comme contenu du Frame
+            Padding = new Thickness(10),
+            CornerRadius = 10,
+            HasShadow = true,
+            HorizontalOptions = LayoutOptions.Center
         };
 
-        ScrollView scrollView = new ScrollView();
-        scrollView.Content = frame; // Ajouter le Frame à la ScrollView
+        ScrollView scrollView = new ScrollView
+        {
+            Content = frame // Ajouter le Frame à la ScrollView
+        };
 
         Title = "Page produit";
-        Grid grid = new Grid
-        {
-            Margin = new Thickness(20),
-            RowDefinitions =
-            {
-                new RowDefinition { Height = new GridLength(0, GridUnitType.Auto) },
-                new RowDefinition { Height = new GridLength(1, GridUnitType.Star) },
-                new RowDefinition { Height = new GridLength(0, GridUnitType.Auto) }
-            }
-        };
 
-        grid.Add(titleLabel);
-        grid.Add(scrollView, 0, 1);
-        grid.Add(button, 0, 2);
-        
+        var buttonStack = new StackLayout
+        {
+            HorizontalOptions = LayoutOptions.Center
+        };
+        buttonStack.Children.Add(button);
 
         button.Clicked += async (sender, args) => await DisplayAlert("Alert", "Clicked", "OK");
-        
-        Content = grid;
+
+        var mainStack = new StackLayout
+        {
+            Padding = new Thickness(20),
+            VerticalOptions = LayoutOptions.CenterAndExpand,
+            HorizontalOptions = LayoutOptions.CenterAndExpand,
+            Children =
+        {
+            titleLabel,
+            scrollView,
+            buttonStack
+        }
+        };
+
+        Content = mainStack;
     }
+
 
     public void generateProduitWithNoProduit()
     {
@@ -174,7 +226,7 @@ public partial class StockAdmin : ContentPage
         };
 
         Button button = new Button { Text = "Ajouter un produit" };
-        button.Clicked += async (sender, e) => { await Navigation.PushModalAsync(new AjoutProduit());  };
+        button.Clicked += async (sender, e) => { await Navigation.PushModalAsync(new AjoutProduit()); };
         deconnexion.Clicked += async (sender, e) => { await Navigation.PushModalAsync(new MainPage()); };
         grid.Add(titleLabel);
         grid.Add(scrollView, 0, 1);

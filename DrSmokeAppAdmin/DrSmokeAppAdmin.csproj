@@ -40,8 +40,10 @@
 	<ItemGroup>
 		<!-- App Icon -->
 		<MauiIcon Include="Resources\AppIcon\logodrsmoke_new_logo.png" />
+		
 		<!-- Splash Screen -->
-		<MauiSplashScreen Include="Resources\Splash\splash.svg" Color="#512BD4" BaseSize="128,128" />
+		<MauiSplashScreen Include="Resources\Splash\logodrsmoke_new_logos.png" />
+		<!-- <MauiSplashScreen Include="Resources\Splash\splash.svg" Color="#512BD4" BaseSize="128,128" /> -->
 
 		<!-- Images -->
 		<MauiImage Include="Resources\Images\*" />
@@ -56,10 +58,12 @@
 
 	<ItemGroup>
 	  <None Remove="Resources\Fonts\Pacifico-Regular.ttf" />
+	  <None Remove="Resources\Images\ajouter_produit.png" />
 	  <None Remove="Resources\Images\home_icon.png" />
 	  <None Remove="Resources\Images\logodrsmoke_new.webp" />
 	  <None Remove="Resources\Images\shop_icon.png" />
 	  <None Remove="Resources\Images\stock_icon.png" />
+	  <None Remove="Resources\Splash\logodrsmoke_new_logos.png" />
 	</ItemGroup>
 
 	<ItemGroup>

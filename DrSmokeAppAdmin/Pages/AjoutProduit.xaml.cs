@@ -1,3 +1,4 @@
+
 using DrSmokeAppAdmin.Models;
 using Microsoft.Maui.Storage;
 using System;
@@ -13,7 +14,8 @@ namespace DrSmokeAppAdmin.Pages;
 
 public partial class AjoutProduit : ContentPage
 {
-	public AjoutProduit()
+    private FileResult result;
+    public AjoutProduit()
 	{
 		InitializeComponent();
         // PickAndShow();
@@ -29,7 +31,7 @@ public partial class AjoutProduit : ContentPage
                 // Vous pouvez également ajouter des filtres de types de fichiers ici si nécessaire
             };
 
-            var result = await FilePicker.Default.PickAsync(options);
+            result = await FilePicker.Default.PickAsync(options);
             if (result != null)
             {
                 if (result.FileName.EndsWith("jpg", StringComparison.OrdinalIgnoreCase) ||
@@ -44,7 +46,7 @@ public partial class AjoutProduit : ContentPage
                     myImageControl.HeightRequest = 300;
 
                     //RemplacerImg.IsVisible = true;
-                    SendProduct(result);
+                    //SendProduct(result);
                 }
             }
         }
@@ -53,80 +55,97 @@ public partial class AjoutProduit : ContentPage
             await DisplayAlert("Alert", $"Une erreur est survenue : {ex.ToString()}", "OK");
         }
     }
-    public void RemplaceImage(object sender, EventArgs args)
+
+    public void RemplaceImage(object sender, EventArgs args, FileResult fileResult)
     {
         myImageControl.Source = null;
 
         //RemplacerImg.IsVisible = false;
     }
-    async private Task SendProduct(FileResult fileResult)
+    private async void SendProduct(object sender, EventArgs args)
     {
-        try
+        string nameProduct = EntryNomProduit.Text;
+        if (CategoriePicker.SelectedIndex != -1)
         {
-            byte[] imageBytes;
+            string selectedValue = CategoriePicker.SelectedItem.ToString();
+            // Faites quelque chose avec la valeur sélectionnée, par exemple l'afficher dans une alerte.
+            await DisplayAlert("Sélection", $"Catégorie sélectionnée : {selectedValue}", "OK");
+        }
 
-            using (MemoryStream ms = new MemoryStream())
+            await DisplayAlert("Alert", "fileResult", "OK");
+
+        if (result != null)
+        {
+            
+            try
             {
-                Stream stream = await fileResult.OpenReadAsync();
-                await stream.CopyToAsync(ms);
-                imageBytes = ms.ToArray();
+                byte[] imageBytes;
+                using (MemoryStream ms = new MemoryStream())
+                {
+                    Stream stream = await result.OpenReadAsync();
+                    await stream.CopyToAsync(ms);
+                    imageBytes = ms.ToArray();
+                }
+
+                ByteArrayContent imageContent = new ByteArrayContent(imageBytes);
+
+                // Utiliser le bon type de contenu pour l'image
+                imageContent.Headers.ContentType = MediaTypeHeaderValue.Parse("image/jpeg"); // ou "image/png" selon le format de l'image
+
+                MultipartFormDataContent form = new MultipartFormDataContent();
+                form.Add(imageContent, "image_produit", result.FileName);
+                form.Add(new StringContent("Première valeur"), "string1");
+                form.Add(new StringContent("Deuxième valeur"), "string2");
+
+                var data = new
+                {
+                    string1 = "Première valeur",
+                    string2 = "Deuxième valeur"
+                    // Ajoutez d'autres propriétés ici si nécessaire
+                };
+
+                //string jsonData = JsonSerializer.Serialize(data);
+
+                // Ajouter le JSON dans la requête
+                //form.Add(new StringContent(jsonData, Encoding.UTF8, "application/json"), "json_data");
+
+                // Récupérer le jeton OAuth
+                string oauthToken = await SecureStorage.Default.GetAsync("oauth_token");
+
+                // Créer une instance HttpClient
+                using (HttpClient httpClient = new HttpClient())
+                {
+                    // Ajouter le jeton OAuth dans les en-têtes de la requête
+                    httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", oauthToken);
+
+                    // URL de destination
+                    Uri uri = new Uri("http://localhost:3000/admin/gestion-stock/create");
+
+                    // Envoyer la requête POST
+                    HttpResponseMessage response = await httpClient.PostAsync(uri, form);
+
+                    // Vérifier si la requête a réussi
+                    if (response.IsSuccessStatusCode)
+                    {
+                        await DisplayAlert("Alert", "Données envoyées avec succès", "OK");
+                    }
+                    else
+                    {
+                        await DisplayAlert("Alert", $"Erreur lors de l'envoi des données : {response.StatusCode}", "OK");
+                    }
+                }
             }
-
-            // Convertir les données en ByteArrayContent pour l'image
-            ByteArrayContent imageContent = new ByteArrayContent(imageBytes);
-            imageContent.Headers.ContentType = MediaTypeHeaderValue.Parse("multipart/form-data");
-
-            // Ajouter l'image dans le contenu de la requête avec le nom du champ attendu par multer ("image_produit" par exemple)
-            MultipartFormDataContent form = new MultipartFormDataContent();
-            form.Add(imageContent, "image_produit", fileResult.FileName);
-
-            // Ajouter d'autres valeurs de type string
-            form.Add(new StringContent("Première valeur"), "string1");
-            form.Add(new StringContent("Deuxième valeur"), "string2");
-
-            // Convertir les données en objet JSON
-            var data = new
+            catch (Exception ex)
             {
-                string1 = "Première valeur",
-                string2 = "Deuxième valeur"
-                // Ajoutez d'autres propriétés ici si nécessaire
-            };
-
-            string jsonData = JsonSerializer.Serialize(data);
-
-            // Ajouter le JSON dans la requête
-            form.Add(new StringContent(jsonData, Encoding.UTF8, "application/json"), "json_data");
-
-            // Récupérer le jeton OAuth
-            string oauthToken = await SecureStorage.Default.GetAsync("oauth_token");
-
-            // Créer une instance HttpClient
-            HttpClient httpClient = new HttpClient();
-
-            // Ajouter le jeton OAuth dans les en-têtes de la requête
-            httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", oauthToken);
-
-            // URL de destination
-            Uri uri = new Uri("http://localhost:3000/admin/gestion-stock/create");
-
-            // Envoyer la requête avec les données multipartie incluant le JSON
-            HttpResponseMessage response = await httpClient.PostAsync(uri, form);
-
-            // Vérifier si la requête a réussi
-            if (response.IsSuccessStatusCode)
-            {
-                await DisplayAlert("Alert", "Données envoyées avec succès", "OK");
-            }
-            else
-            {
-                await DisplayAlert("Alert", "Erreur lors de l'envoi des données", "OK");
+                await DisplayAlert("Alert", $"Une exception est survenue : {ex.Message}", "OK");
             }
         }
-        catch (Exception ex)
+        else
         {
-            await DisplayAlert("Alert", $"Une erreur est survenue : {ex.Message}", "OK");
+            await DisplayAlert("Alert", "Aucune image sélectionnée.", "OK");
         }
     }
+
 
 
 

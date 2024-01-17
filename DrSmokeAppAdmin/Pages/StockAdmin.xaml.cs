@@ -16,6 +16,7 @@ public partial class StockAdmin : ContentPage
     {
         InitializeComponent();
         BlackCatPage();
+        //generateProduitWithNoProduit();
 
     }
 
@@ -48,25 +49,28 @@ public partial class StockAdmin : ContentPage
                 try
                 {
                     var items = JsonSerializer.Deserialize<List<Models.ProduitAdmin>>(content, _serializerOptions);
-                    Items.AddRange(items);
-                    var stack = new StackLayout();
-                    var scrollView = new ScrollView();
+
+                    var grid = new Grid();
+                    grid.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
 
                     if (items.Count > 0)
                     {
-                        foreach (var item in items)
+                        for (int i = 0; i < items.Count; i++)
                         {
-                            var labelCategorie = new Label { Text = item.CategorieProduit, FontFamily = "Pacifico" };
+                            var item = items[i];
+
+                            grid.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
+
+                            var labelCategorie = new Label { Text = item.CategorieProduit.ToString(), FontFamily = "Pacifico" };
                             var labelNom = new Label { Text = item.NomProduit, FontAttributes = FontAttributes.Bold, FontSize = 15, Margin = new Thickness(0, 5, 0, 5) };
-                            var labelDescriptif = new Label { Text = item.Descriptif, FontFamily = "Pacifico" };
-                            var labelQuantite = new Label { Text = item.Quantite.ToString() + "g/En stock", FontFamily = "Pacifico", Margin = new Thickness(0, 5, 0, 5) };
-                            var labelPrix = new Label { Text = item.UnGprix.ToString() + "€/1g", FontFamily = "Pacifico", Margin = new Thickness(0, 5, 0, 5) };
-                            await DisplayAlert("Alert", item.ImgProduit, "ok");
+                            var labelDescriptif = new Label { Text = item.Descriptif, FontFamily = "Pacifico", WidthRequest = 250, HeightRequest = 250 };
+                            var labelQuantite = new Label { Text = item.Quantite + "g/En stock", FontFamily = "Pacifico", Margin = new Thickness(0, 5, 0, 5) };
+                            var labelPrix = new Label { Text = item.UnGprix + "€/1g", FontFamily = "Pacifico", Margin = new Thickness(0, 5, 0, 5) };
                             Microsoft.Maui.Controls.Image cardImage = new Microsoft.Maui.Controls.Image
                             {
                                 Source = $"{item.ImgProduit}",
-                                WidthRequest = 200, // Ajustez la taille de l'image selon vos besoins
-                                HeightRequest = 200,
+                                WidthRequest = 250,
+                                HeightRequest = 250,
                                 Aspect = Aspect.AspectFill
                             };
 
@@ -89,10 +93,30 @@ public partial class StockAdmin : ContentPage
                                 VerticalOptions = LayoutOptions.Center
                             };
 
-                            stack.Children.Add(card);
+                            grid.Add(card, 0, i + 1); // Add card to grid, starting from the second row
                         }
 
-                        scrollView.Content = stack;
+                        var ajouterProduitButton = new Button
+                        {
+                            Text = "Ajouter un produit",
+                            FontFamily = "Pacifico",
+                            HorizontalOptions = LayoutOptions.Fill,
+                            Margin = new Thickness(20, 20, 20, 20),
+                            //VerticalOptions = LayoutOptions.EndAndExpand // Align at the bottom,
+                        };
+
+                        ajouterProduitButton.Clicked += (sender, e) =>
+                        {
+                            // Code to execute when the button is clicked to add a product
+                            // Add the logic here to add a new product
+                        };
+
+                        grid.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
+                        //grid.Add(ajouterProduitButton, 0, items.Count + 1); // Add button to the last row
+                        grid.Add(ajouterProduitButton);
+                        //stackContent.Children.Add(ajouterProduitButton);
+
+                        var scrollView = new ScrollView { Content = grid };
                         Content = scrollView;
                     }
                     else

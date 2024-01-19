@@ -46,20 +46,24 @@
                     </x:Array>
                 </Picker.ItemsSource>
             </Picker>
-            <Entry Placeholder="Descriptif du produit" IsSpellCheckEnabled="false" Margin="10, 10, 10, 10" />
-            <Entry Placeholder="Quantite en grammes" Keyboard="Numeric"
+            <Entry x:Name="EntryDescriptifProduit" Placeholder="Descriptif du produit" IsSpellCheckEnabled="false" Margin="10, 10, 10, 10" />
+            <Entry x:Name="EntryQuantiteProduit" Placeholder="Quantite en grammes" Keyboard="Numeric"
                 Text="{Binding IntegerValue, Mode=TwoWay}" Margin="10, 10, 10, 10" />
             
 
-            <Entry Placeholder="Prix 1g" Keyboard="Numeric"
+            <Entry Placeholder="Prix 1g" Keyboard="Numeric" x:Name="EntryPrix1g"
                 Text="{Binding IntegerValue, Mode=TwoWay}" Margin="10, 10, 10, 10" />
-            <Entry Placeholder="Prix 3g" Keyboard="Numeric"
+            
+            <Entry Placeholder="Prix 3g" Keyboard="Numeric" x:Name="EntryPrix3g"
                 Text="{Binding IntegerValue, Mode=TwoWay}" Margin="10, 10, 10, 10" />
-            <Entry Placeholder="Prix 5g" Keyboard="Numeric"
+            
+            <Entry Placeholder="Prix 5g" Keyboard="Numeric" x:Name="EntryPrix5g"
                 Text="{Binding IntegerValue, Mode=TwoWay}" Margin="10, 10, 10, 10" />
-            <Entry Placeholder="Prix 10g" Keyboard="Numeric"
+            
+            <Entry Placeholder="Prix 10g" Keyboard="Numeric" x:Name="EntryPrix10g"
                 Text="{Binding IntegerValue, Mode=TwoWay}" Margin="10, 10, 10, 10" />
-            <Entry Placeholder="Prix 20g" Keyboard="Numeric"
+            
+            <Entry Placeholder="Prix 20g" Keyboard="Numeric" x:Name="EntryPrix20g"
                 Text="{Binding IntegerValue, Mode=TwoWay}" Margin="10, 10, 10, 10" />
 
             <Button Text="Ajouter le produit" Clicked="SendProduct" Margin="10, 10, 10, 10" />

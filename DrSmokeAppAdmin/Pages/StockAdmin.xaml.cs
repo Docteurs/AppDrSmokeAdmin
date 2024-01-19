@@ -1,3 +1,4 @@
+
 using Microsoft.Maui;
 using Microsoft.Maui.ApplicationModel.Communication;
 using Microsoft.Maui.Controls.Shapes;
@@ -15,11 +16,17 @@ public partial class StockAdmin : ContentPage
     public StockAdmin()
     {
         InitializeComponent();
-        BlackCatPage();
+        OnAppearing();
+
         //generateProduitWithNoProduit();
 
     }
-
+    protected override void OnAppearing()
+    {
+        base.OnAppearing();
+        // Charger les données ici
+        BlackCatPage();
+    }
     async public void BlackCatPage()
     {
 
@@ -66,6 +73,20 @@ public partial class StockAdmin : ContentPage
                             var labelDescriptif = new Label { Text = item.Descriptif, FontFamily = "Pacifico", WidthRequest = 250, HeightRequest = 250 };
                             var labelQuantite = new Label { Text = item.Quantite + "g/En stock", FontFamily = "Pacifico", Margin = new Thickness(0, 5, 0, 5) };
                             var labelPrix = new Label { Text = item.UnGprix + "€/1g", FontFamily = "Pacifico", Margin = new Thickness(0, 5, 0, 5) };
+                            var buttonVoirProduit = new Button { Text = "Voir le produit" };
+                            buttonVoirProduit.Clicked += async (sender, e) =>
+                            {
+                                // Code to execute when the button is clicked to add a product
+                                // Add the logic here to add a new product
+                                // Navigation.PushAsync(new Pages.AjoutProduit());
+                                var navigationParameter = new ShellNavigationQueryParameters
+                                {
+                                    { "Uuid", item.Uuid }
+                                };
+                                //await Shell.Current.GoToAsync($"//ProduitDetail", navigationParameter);
+                                
+                                await Shell.Current.GoToAsync($"ProduitDetail", navigationParameter);
+                            };
                             Microsoft.Maui.Controls.Image cardImage = new Microsoft.Maui.Controls.Image
                             {
                                 Source = $"{item.ImgProduit}",
@@ -81,6 +102,7 @@ public partial class StockAdmin : ContentPage
                             stackContent.Children.Add(labelDescriptif);
                             stackContent.Children.Add(labelQuantite);
                             stackContent.Children.Add(labelPrix);
+                            stackContent.Children.Add(buttonVoirProduit);
 
                             var card = new Frame
                             {
@@ -109,6 +131,8 @@ public partial class StockAdmin : ContentPage
                         {
                             // Code to execute when the button is clicked to add a product
                             // Add the logic here to add a new product
+                            // Navigation.PushAsync(new Pages.AjoutProduit());
+                            Shell.Current.GoToAsync("//AjoutProduit");
                         };
 
                         grid.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
@@ -138,9 +162,6 @@ public partial class StockAdmin : ContentPage
             await DisplayAlert("Alert", ex.ToString(), "OK");
 
         }
-
-
-
 
     }
     public void generateProduitAdminWithStock(string CategorieProduit, string NomProduit, string Descriptif, int Quantite, decimal UnGprix, string ImgProduit)

@@ -79,6 +79,9 @@
 	  <MauiXaml Update="Pages\GestionBoutiqueAdmin.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="Pages\ProduitDetail.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Pages\StockAdmin.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>

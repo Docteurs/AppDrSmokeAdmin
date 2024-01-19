@@ -7,7 +7,7 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Text.Json;
-    
+
 
 
 namespace DrSmokeAppAdmin.Pages;
@@ -65,16 +65,79 @@ public partial class AjoutProduit : ContentPage
     private async void SendProduct(object sender, EventArgs args)
     {
         string nameProduct = EntryNomProduit.Text;
-        if (CategoriePicker.SelectedIndex != -1)
+        string descriptifProduct = EntryDescriptifProduit.Text;
+        string categorieProduct = string.Empty;
+        int resultQuantiteProductGramme = 0;
+        int resultEntryPrix1g = 0;
+        int resultEntryPrix3g = 0;
+        int resultEntryPrix5g = 0;
+        int resultEntryPrix10g = 0;
+        int resultEntryPrix20g = 0;
+
+        // Verification du champ quantité en gramme si int ou string    
+        if (int.TryParse(EntryQuantiteProduit.Text, out int resultGramme))
         {
-            string selectedValue = CategoriePicker.SelectedItem.ToString();
-            // Faites quelque chose avec la valeur sélectionnée, par exemple l'afficher dans une alerte.
-            await DisplayAlert("Sélection", $"Catégorie sélectionnée : {selectedValue}", "OK");
+            resultQuantiteProductGramme = resultGramme;
+        }
+        else
+        {
+            await DisplayAlert("Alert", "Veuillez rentre un nombre entier pour la quantité en gramme", "OK");
         }
 
-            await DisplayAlert("Alert", "fileResult", "OK");
+        if (CategoriePicker.SelectedIndex != -1)
+        {
+            //string selectedValue = CategoriePicker.SelectedItem.ToString();
+            categorieProduct = CategoriePicker.SelectedItem.ToString();
+            // Faites quelque chose avec la valeur sélectionnée, par exemple l'afficher dans une alerte.
+            // await DisplayAlert("Sélection", $"Catégorie sélectionnée : {selectedValue}", "OK");
+        }
+        // Convertion de l'entré en int pour le prix 1g
+        if (double.TryParse(EntryPrix1g.Text, out double resultPrix1g))
+        {
+            resultEntryPrix1g = Convert.ToInt32(resultPrix1g);
+        }
+        else
+        {
+            Console.WriteLine("La valeur entrée pour le prix 1g n'est pas un nombre décimal");
+        }
 
-        if (result != null)
+        if (double.TryParse(EntryPrix3g.Text, out double resultPrix3g))
+        {
+            resultEntryPrix3g = Convert.ToInt32(resultPrix3g);
+        }
+        else
+        {
+            Console.WriteLine("La valeur entrée pour le prix 3g n'est pas un nombre décimal");
+        }
+
+        if (double.TryParse(EntryPrix5g.Text, out double resultPrix5g))
+        {
+            resultEntryPrix5g = Convert.ToInt32(resultPrix5g);
+        }
+        else
+        {
+            Console.WriteLine("La valeur entrée pour le prix 5g n'est pas un nombre décimal");
+        }
+
+        if (double.TryParse(EntryPrix10g.Text, out double resultPrix10g))
+        {
+            resultEntryPrix10g = Convert.ToInt32(resultPrix10g);
+        }
+        else
+        {
+            Console.WriteLine("La valeur entrée pour le prix 10g n'est pas un nombre décimal");
+        }
+
+        if (double.TryParse(EntryPrix20g.Text, out double resultPrix20g))
+        {
+            resultEntryPrix20g = Convert.ToInt32(resultPrix20g);
+        }
+        else
+        {
+            Console.WriteLine("La valeur entrée pour le prix 20g n'est pas un nombre décimal");
+        }
+
+        if (result != null && !string.IsNullOrEmpty(nameProduct) && !string.IsNullOrEmpty(descriptifProduct) && !string.IsNullOrEmpty(categorieProduct) && resultQuantiteProductGramme != 0 && resultEntryPrix1g != 0 && resultEntryPrix3g != 0 && resultEntryPrix5g != 0 && resultEntryPrix10g != 0 && resultEntryPrix20g != 0)
         {
             
             try
@@ -94,13 +157,28 @@ public partial class AjoutProduit : ContentPage
 
                 MultipartFormDataContent form = new MultipartFormDataContent();
                 form.Add(imageContent, "image_produit", result.FileName);
-                form.Add(new StringContent("Première valeur"), "string1");
-                form.Add(new StringContent("Deuxième valeur"), "string2");
+                form.Add(new StringContent(nameProduct.ToString()), "nameProduct");
+                form.Add(new StringContent(descriptifProduct.ToString()), "descriptifProduct");
+                form.Add(new StringContent(categorieProduct.ToString()), "categorieProduct");
+                form.Add(new StringContent(resultQuantiteProductGramme.ToString()), "resultQuantiteProductGramme");
+                form.Add(new StringContent(resultEntryPrix1g.ToString()), "prix1gProduit");
+                form.Add(new StringContent(resultEntryPrix3g.ToString()), "prix3gProduit");
+                form.Add(new StringContent(resultEntryPrix5g.ToString()), "prix5gProduit");
+                form.Add(new StringContent(resultEntryPrix10g.ToString()), "prix10gProduit");
+                form.Add(new StringContent(resultEntryPrix20g.ToString()), "prix20gProduit");
+
 
                 var data = new
                 {
-                    string1 = "Première valeur",
-                    string2 = "Deuxième valeur"
+                    nomProduit = nameProduct,
+                    descriptifProduit = descriptifProduct,
+                    categorieProduit = categorieProduct,
+                    quantiteGrammeProduit = resultQuantiteProductGramme,
+                    prix1gProduit = resultEntryPrix1g,
+                    prix3gProduit = resultEntryPrix3g,
+                    prix5gProduit = resultEntryPrix5g,
+                    prix10gProduit = resultEntryPrix10g,
+                    prix20gProduit = resultEntryPrix20g
                     // Ajoutez d'autres propriétés ici si nécessaire
                 };
 
@@ -127,11 +205,24 @@ public partial class AjoutProduit : ContentPage
                     // Vérifier si la requête a réussi
                     if (response.IsSuccessStatusCode)
                     {
-                        await DisplayAlert("Alert", "Données envoyées avec succès", "OK");
+                        string responseContent = await response.Content.ReadAsStringAsync();
+                        var apiResponse = JsonSerializer.Deserialize<Models.ReponseAPI>(responseContent);
+                        await DisplayAlert("Alert", $"Test ${apiResponse.message} ", "ok");
+                        // Get current page
+                        //var page = Navigation.NavigationStack.LastOrDefault();
+
+                        // Load new page
+                        //await Shell.Current.GoToAsync(nameof(Pages.StockAdmin), false);
+                        await Shell.Current.GoToAsync("//StockAdmin");
+                        // Remove old page
+                        //Navigation.RemovePage(page);
                     }
                     else
                     {
-                        await DisplayAlert("Alert", $"Erreur lors de l'envoi des données : {response.StatusCode}", "OK");
+                        // await DisplayAlert("Alert", $"Erreur lors de l'envoi des données : {response.StatusCode}", "OK");
+                        string responseContent = await response.Content.ReadAsStringAsync();
+                        var apiResponse = JsonSerializer.Deserialize<Models.ReponseAPI>(responseContent);
+                        await DisplayAlert("Alert", $"Test ${apiResponse.message} ", "ok");
                     }
                 }
             }
@@ -142,7 +233,7 @@ public partial class AjoutProduit : ContentPage
         }
         else
         {
-            await DisplayAlert("Alert", "Aucune image sélectionnée.", "OK");
+            await DisplayAlert("Alert", "Tout les champs son obligatoire", "OK");
         }
     }
 

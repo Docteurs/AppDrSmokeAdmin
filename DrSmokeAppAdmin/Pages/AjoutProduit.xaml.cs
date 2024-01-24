@@ -237,7 +237,10 @@ public partial class AjoutProduit : ContentPage
         }
     }
 
-
+    async public void BackToPage(object sender, EventArgs args)
+    {
+        await Shell.Current.GoToAsync("//StockAdmin");
+    }
 
 
 

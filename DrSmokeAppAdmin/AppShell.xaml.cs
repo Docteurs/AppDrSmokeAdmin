@@ -10,6 +10,7 @@
             Routing.RegisterRoute("StockAdmin", typeof(Pages.StockAdmin));
             Routing.RegisterRoute("AjoutProduit", typeof(Pages.AjoutProduit));
             Routing.RegisterRoute("ProduitDetail", typeof(Pages.ProduitDetail));
+            Routing.RegisterRoute("Commande", typeof(Pages.Commande));
         }
     }
 }

@@ -65,7 +65,7 @@ public partial class StockAdmin : ContentPage
                         for (int i = 0; i < items.Count; i++)
                         {
                             var item = items[i];
-
+                            
                             grid.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
 
                             var labelCategorie = new Label { Text = item.CategorieProduit.ToString(), FontFamily = "Pacifico" };
@@ -137,7 +137,8 @@ public partial class StockAdmin : ContentPage
 
                         grid.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
                         //grid.Add(ajouterProduitButton, 0, items.Count + 1); // Add button to the last row
-                        grid.Add(ajouterProduitButton);
+                        grid.Add(ajouterProduitButton, 0);
+
                         //stackContent.Children.Add(ajouterProduitButton);
 
                         var scrollView = new ScrollView { Content = grid };
@@ -164,7 +165,7 @@ public partial class StockAdmin : ContentPage
         }
 
     }
-    public void generateProduitAdminWithStock(string CategorieProduit, string NomProduit, string Descriptif, int Quantite, decimal UnGprix, string ImgProduit)
+    /*public void generateProduitAdminWithStock(string CategorieProduit, string NomProduit, string Descriptif, int Quantite, decimal UnGprix, string ImgProduit, bool isVisible)
     {
         Label titleLabel = new Label
         {
@@ -234,7 +235,7 @@ public partial class StockAdmin : ContentPage
         };
 
         Content = mainStack;
-    }
+    }*/
 
 
     public void generateProduitWithNoProduit()

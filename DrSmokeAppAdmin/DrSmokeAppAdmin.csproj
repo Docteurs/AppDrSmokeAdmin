@@ -59,6 +59,7 @@
 	<ItemGroup>
 	  <None Remove="Resources\Fonts\Pacifico-Regular.ttf" />
 	  <None Remove="Resources\Images\ajouter_produit.png" />
+	  <None Remove="Resources\Images\commande.png" />
 	  <None Remove="Resources\Images\home_icon.png" />
 	  <None Remove="Resources\Images\logodrsmoke_new.webp" />
 	  <None Remove="Resources\Images\shop_icon.png" />
@@ -74,6 +75,9 @@
 
 	<ItemGroup>
 	  <MauiXaml Update="Pages\AjoutProduit.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Pages\Commande.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Pages\GestionBoutiqueAdmin.xaml">

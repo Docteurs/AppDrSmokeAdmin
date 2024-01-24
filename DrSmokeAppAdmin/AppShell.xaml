@@ -23,8 +23,9 @@
         <Tab Title="Produit" Icon="stock_icon.png" >
             <ShellContent ContentTemplate="{DataTemplate local:Pages.StockAdmin}" Route="StockAdmin" />
         </Tab>
-        <Tab Title="Ajouter un produit" Icon="ajouter_produit.png">
-            <ShellContent ContentTemplate="{DataTemplate local:Pages.AjoutProduit}" Route="AjoutProduit" />
+        <Tab Title="Commande" Icon="commande.png">
+            <ShellContent ContentTemplate="{DataTemplate local:Pages.Commande}" Route="Commande"/>
         </Tab>
     </TabBar>
+    <ShellContent ContentTemplate="{DataTemplate local:Pages.AjoutProduit}" Route="AjoutProduit" />
 </Shell>

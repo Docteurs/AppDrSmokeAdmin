@@ -4,7 +4,10 @@
              x:Class="DrSmokeAppAdmin.Pages.AjoutProduit"
              Title="AjoutProduit">
     <ScrollView>
+        
         <VerticalStackLayout>
+            <Button Text="Retour en arriere" Clicked="BackToPage"/>
+
 
             <Image Source="logodrsmoke_new.webp" WidthRequest="250" HeightRequest="250" Margin="20, 20, 20, 20" />
 

@@ -42,7 +42,7 @@
 		<MauiIcon Include="Resources\AppIcon\logodrsmoke_new_logo.png" />
 		
 		<!-- Splash Screen -->
-		<MauiSplashScreen Include="Resources\Splash\logodrsmoke_new_logos.png" />
+		<MauiSplashScreen Include="Resources\Splash\logodrsmoke_new_logos.png" Color="#FBFBFB" />
 		<!-- <MauiSplashScreen Include="Resources\Splash\splash.svg" Color="#512BD4" BaseSize="128,128" /> -->
 
 		<!-- Images -->

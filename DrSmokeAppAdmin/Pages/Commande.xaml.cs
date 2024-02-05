@@ -12,7 +12,7 @@ public partial class Commande : ContentPage
     public Commande()
 	{
 		InitializeComponent();
-
+        OnAppearing();
     }
     protected async override void OnAppearing()
     {
@@ -32,7 +32,7 @@ public partial class Commande : ContentPage
         {
             var oauthToken = await SecureStorage.Default.GetAsync("oauth_token");
             UCommande = new List<Models.Commande>();
-            Uri uri = new Uri("http://localhost:3000/admin/commande-admin/");
+            Uri uri = new Uri("https://get-evolutif.xyz/DrSmokeApi/admin/commande-admin/");
             _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", oauthToken);
             HttpResponseMessage response = await _client.GetAsync(uri);
             
@@ -53,6 +53,7 @@ public partial class Commande : ContentPage
             else
             {
                 await DisplayAlert("Alerte", "Une erreur est survenue", "OK");
+                await Navigation.PushAsync(new Pages.ConnexionPage());
             }
         }
         catch (Exception ex)

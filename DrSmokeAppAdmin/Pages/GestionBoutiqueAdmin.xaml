@@ -2,202 +2,70 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="DrSmokeAppAdmin.Pages.GestionBoutiqueAdmin"
-             Title="GestionBoutiqueAdmin">
-
+             Title="GestionBoutiqueAdmin"
+             Shell.TabBarIsVisible="True">
+    <ContentPage.Resources>
+        <Style TargetType="Button">
+            <Setter Property="BackgroundColor" Value="#1a6f36" />
+            <Setter Property="FontSize" Value="20" />
+            <Setter Property="TextColor" Value="White"/>
+        </Style>
+        <Style TargetType="Button" x:Key="Deconnexion">
+            <Setter Property="WidthRequest" Value="300"/>
+            <Setter Property="Margin" Value="10,10,10,10"/>
+            <Setter Property="FontSize" Value="20" />
+            <Setter Property="TextColor" Value="White"/>
+            <Setter Property="BackgroundColor" Value="Red"/>
+        </Style>
+        <Style TargetType="Label">
+            <Setter Property="FontFamily" Value="NunitoRegular" />
+            <Setter Property="FontAttributes" Value="Bold" />
+            <Setter Property="TextColor" Value="Black" />
+            <Setter Property="FontSize" Value="15" />
+            <Setter Property="Margin" Value="10,10,10,10" />
+        </Style>
+        <Style x:Key="Title" TargetType="Label">
+            <Setter Property="FontSize" Value="22" />
+            <Setter Property="FontAttributes" Value="Bold" />
+            <Setter Property="TextColor" Value="Black" />
+            <Setter Property="Margin" Value="10,10,10,10" />
+        </Style>
+    </ContentPage.Resources>
     <ScrollView>
         <Grid>
             <Grid.RowDefinitions>
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
+                <RowDefinition Height="2*" />
+                <RowDefinition  />
+                <RowDefinition  />
+                <RowDefinition Height="100" />
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
+            <Image Source="logodrsmoke_new.webp" WidthRequest="250" HeightRequest="250" HorizontalOptions="Center" />
 
+            <Frame Grid.Row="1" WidthRequest="300" Margin="10,10,10,10" BorderColor="#eae7e7">
+                <VerticalStackLayout>
 
-            <Image Source="logodrsmoke_new.webp" WidthRequest="400" HeightRequest="400" />
-
-            <Frame BorderColor="Gray"
-               Grid.Row="1"
-               HorizontalOptions="Center"
-               VerticalOptions="Center"
-               CornerRadius="5"
-               WidthRequest="400"
-               Padding="8">
-                <StackLayout>
-                    <Label x:Name="VilleMagasin"
-                           FontSize="14"
-                           FontAttributes="Bold" />
-                    <BoxView Color="Gray"
-                             HeightRequest="2"
-                             HorizontalOptions="Fill" />
-                    <Image x:Name="imgUrlMagasin"
-                           WidthRequest="300"
-                           HeightRequest="300"/>
-                    <BoxView Color="Gray"
-                             HeightRequest="2"
-                             HorizontalOptions="Fill" />
-                    <Label x:Name="adresseMagasin"
-                       FontSize="14"
-                       FontAttributes="Bold" />
-                    <Label x:Name="code_postalMagasin"/>
-                    
-                    <Label x:Name="prenomMagasin"/>
-                    <Label x:Name="nomMagasin"/>
-                    <Label x:Name="emailMagasin"/>
-                    <Button Text="Modifier le produit" Clicked="FormUpdateBoutiqueIsVisible" />
-                </StackLayout>
+                    <Image>
+                        <Image.Source>
+                            <UriImageSource x:Name="imgUrlMagasin"
+                                            CacheValidity="10:00:00:00" />
+                        </Image.Source>
+                    </Image>
+                    <Label x:Name="VilleMagasin" Text="DR SMOKE" Style="{StaticResource Title}" />
+                    <Label x:Name="adresseMagasin" Text="" />
+                    <Label x:Name="prenomMagasin" Text="" />
+                    <Label x:Name="nomMagasin" Text="" />
+                    <Label x:Name="emailMagasin" Text="" />
+                    <Button Text="Gerer le magasin" />
+                </VerticalStackLayout>
             </Frame>
 
 
-            <Frame
-                IsVisible="False"
-                Margin="20, 20, 20, 20"
-                Grid.Row="2"
-                BorderColor="Gray"
-                HorizontalOptions="Center"
-                VerticalOptions="Center"
-                CornerRadius="5"
-                WidthRequest="400"
-                x:Name="FormUpdateBoutique"
-                Padding="8">
-                <StackLayout>
-                    <Frame Padding="20" CornerRadius="10" BorderColor="Green"  Margin="20, 20, 20, 20">
-                        <Image x:Name="myImageControl"/>
-                    </Frame>
+            
 
-                    <Frame BackgroundColor="#F5F5F5" Padding="20" CornerRadius="10" HasShadow="True" Margin="10, 10, 10, 10">
-                        <Button Text="Sélectionner un fichier"
-                                BackgroundColor="#DDDDDD"
-                                TextColor="#333333"
-                                Padding="10"
-                                Clicked="PickAndShow"
-                                />
-                    </Frame>
-
-                    <Entry x:Name="EntryEmailAdmin" Placeholder="Email" Margin="10, 10, 10, 10"/>
-               
-
-                    <Entry x:Name="EntryAddresseAdmin" Placeholder="Addresse" IsSpellCheckEnabled="false" Margin="10, 10, 10, 10" />
-                    <Entry x:Name="EntryNomAdmin" Placeholder="Entrez votre Nom" IsSpellCheckEnabled="false" Margin="10, 10, 10, 10" />
-                    <Entry x:Name="EntryPrenomAdmin" Placeholder="Entrez votre Prenom" IsSpellCheckEnabled="false" Margin="10, 10, 10, 10" />
-
-                    <Label Text="Cocher les jours ou êtes ouvert" />
-
-                    <CheckBox x:Name="CheckBoxLundi" IsChecked="true" />
-                    <Label Text="Lundi">
-                        <Label.Triggers>
-                            <DataTrigger TargetType="Label"
-                                          Binding="{Binding Source={x:Reference checkBox}, Path=IsChecked}"
-                                          Value="true">
-                                 <Setter Property="FontAttributes"
-                                         Value="Italic, Bold" />
-                                 <Setter Property="FontSize"
-                                         Value="18" />
-                            </DataTrigger>
-                        </Label.Triggers>
-                    </Label>
-
-                    <CheckBox x:Name="CheckBoxMardi" IsChecked="true" />
-                    <Label Text="Mardi">
-                        <Label.Triggers>
-                            <DataTrigger TargetType="Label"
-                                          Binding="{Binding Source={x:Reference checkBox}, Path=IsChecked}"
-                                          Value="true">
-                                <Setter Property="FontAttributes"
-                                         Value="Italic, Bold" />
-                                <Setter Property="FontSize"
-                                         Value="18" />
-                            </DataTrigger>
-                        </Label.Triggers>
-                    </Label>
-
-                    <CheckBox x:Name="CheckBoxMercredi" IsChecked="true" />
-                    <Label Text="Mercredi">
-                        <Label.Triggers>
-                            <DataTrigger TargetType="Label"
-                                          Binding="{Binding Source={x:Reference checkBox}, Path=IsChecked}"
-                                          Value="true">
-                                <Setter Property="FontAttributes"
-                                         Value="Italic, Bold" />
-                                <Setter Property="FontSize"
-                                         Value="18" />
-                            </DataTrigger>
-                        </Label.Triggers>
-                    </Label>
-
-                    <CheckBox x:Name="CheckBoxJeudi" IsChecked="true" />
-                    <Label Text="Jeudi">
-                        <Label.Triggers>
-                            <DataTrigger TargetType="Label"
-                                          Binding="{Binding Source={x:Reference checkBox}, Path=IsChecked}"
-                                          Value="true">
-                                <Setter Property="FontAttributes"
-                                        Value="Italic, Bold" />
-                                <Setter Property="FontSize"
-                                        Value="18" />
-                            </DataTrigger>
-                        </Label.Triggers>
-                    </Label>
-
-                    <CheckBox x:Name="CheckBoxVendredi" IsChecked="true" />
-                    <Label Text="Vendredi">
-                        <Label.Triggers>
-                            <DataTrigger TargetType="Label"
-                                          Binding="{Binding Source={x:Reference checkBox}, Path=IsChecked}"
-                                          Value="true">
-                                <Setter Property="FontAttributes"
-                                        Value="Italic, Bold" />
-                                <Setter Property="FontSize"
-                                        Value="18" />
-                            </DataTrigger>
-                        </Label.Triggers>
-                    </Label>
-
-                    <CheckBox x:Name="CheckBoxSamedi" IsChecked="False" />
-                    <Label Text="Samedi">
-                        <Label.Triggers>
-                            <DataTrigger TargetType="Label"
-                                          Binding="{Binding Source={x:Reference checkBox}, Path=IsChecked}"
-                                          Value="true">
-                                <Setter Property="FontAttributes"
-                                        Value="Italic, Bold" />
-                                <Setter Property="FontSize"
-                                        Value="18" />
-                            </DataTrigger>
-                        </Label.Triggers>
-                    </Label>
-
-                    <CheckBox x:Name="CheckBoxDimanche" IsChecked="False" />
-                    <Label Text="Dimanche">
-                        <Label.Triggers>
-                            <DataTrigger TargetType="Label"
-                                          Binding="{Binding Source={x:Reference checkBox}, Path=IsChecked}"
-                                          Value="true">
-                                <Setter Property="FontAttributes"
-                                        Value="Italic, Bold" />
-                                <Setter Property="FontSize"
-                                        Value="18" />
-                            </DataTrigger>
-                        </Label.Triggers>
-                    </Label>
-
-                    <Entry x:Name="EntryHorraireLundi" Placeholder="ex: 8h - 18h Ou Fermé" IsSpellCheckEnabled="false" Margin="10, 10, 10, 10" />
-                    <Entry x:Name="EntryHorraireMardi" Placeholder="ex: 8h - 18h Ou Fermé." IsSpellCheckEnabled="false" Margin="10, 10, 10, 10" />
-                    <Entry x:Name="EntryHorraireMercredi" Placeholder="ex: 8h - 18h Ou Fermé" IsSpellCheckEnabled="false" Margin="10, 10, 10, 10" />
-                    <Entry x:Name="EntryHorraireJeudi" Placeholder="ex: 8h - 18h Ou Fermé" IsSpellCheckEnabled="false" Margin="10, 10, 10, 10" />
-                    <Entry x:Name="EntryHorraireVendredi" Placeholder="ex: 8h - 18h Ou Fermé" IsSpellCheckEnabled="false" Margin="10, 10, 10, 10" />
-                    <Entry x:Name="EntryHorraireSamedi" Placeholder="ex: 8h - 18h Ou Fermé" IsSpellCheckEnabled="false" Margin="10, 10, 10, 10" />
-                    <Entry x:Name="EntryHorraireDimanche" Placeholder="ex: 8h - 18h Ou Fermé" IsSpellCheckEnabled="false" Margin="10, 10, 10, 10" />
-
-                    <Button Text="Modifier le produit" Margin="10, 10, 10, 10" Clicked="SendModificationProduit" />
-                </StackLayout>
-            </Frame>
-
+            <Button Grid.Row="3" Text="Déconnexion" Clicked="OnDeconnexion" />
         </Grid>
     </ScrollView>
-
-
-
 </ContentPage>

@@ -14,9 +14,7 @@
 
 
     <TabBar  x:Name="myTabBar">
-        <Tab Title="Home" Icon="home_icon.png" x:Name="test" >
-            <ShellContent ContentTemplate="{DataTemplate local:MainPage}" Route="MainPage" />
-        </Tab>
+        
         <Tab Title="Shop" Icon="shop_icon.png" >
             <ShellContent ContentTemplate="{DataTemplate local:Pages.GestionBoutiqueAdmin}" Route="GestionBoutiqueAdmin" />
         </Tab>
@@ -28,4 +26,5 @@
         </Tab>
     </TabBar>
     <ShellContent ContentTemplate="{DataTemplate local:Pages.AjoutProduit}" Route="AjoutProduit" />
+    <ShellContent ContentTemplate="{DataTemplate local:Pages.ConnexionPage}" Route="MainPage" />
 </Shell>

@@ -197,7 +197,7 @@ public partial class AjoutProduit : ContentPage
                     httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", oauthToken);
 
                     // URL de destination
-                    Uri uri = new Uri("http://localhost:3000/admin/gestion-stock/create");
+                    Uri uri = new Uri("https://get-evolutif.xyz/DrSmokeApi/admin/gestion-stock/create");
 
                     // Envoyer la requête POST
                     HttpResponseMessage response = await httpClient.PostAsync(uri, form);
@@ -207,7 +207,7 @@ public partial class AjoutProduit : ContentPage
                     {
                         string responseContent = await response.Content.ReadAsStringAsync();
                         var apiResponse = JsonSerializer.Deserialize<Models.ReponseAPI>(responseContent);
-                        await DisplayAlert("Alert", $"Test ${apiResponse.message} ", "ok");
+                        await DisplayAlert("Alert", $"Test ${apiResponse.Message} ", "ok");
                         // Get current page
                         //var page = Navigation.NavigationStack.LastOrDefault();
 
@@ -222,13 +222,14 @@ public partial class AjoutProduit : ContentPage
                         // await DisplayAlert("Alert", $"Erreur lors de l'envoi des données : {response.StatusCode}", "OK");
                         string responseContent = await response.Content.ReadAsStringAsync();
                         var apiResponse = JsonSerializer.Deserialize<Models.ReponseAPI>(responseContent);
-                        await DisplayAlert("Alert", $"Test ${apiResponse.message} ", "ok");
+                        await DisplayAlert("Alert", $"Test ${apiResponse.Message} ", "ok");
                     }
                 }
             }
             catch (Exception ex)
             {
                 await DisplayAlert("Alert", $"Une exception est survenue : {ex.Message}", "OK");
+                await Navigation.PushAsync(new Pages.ConnexionPage());
             }
         }
         else

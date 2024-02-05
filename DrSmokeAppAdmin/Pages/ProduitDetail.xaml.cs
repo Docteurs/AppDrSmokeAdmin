@@ -52,7 +52,7 @@ namespace DrSmokeAppAdmin.Pages
                 };
                 string oauthToken = await SecureStorage.Default.GetAsync("oauth_token");
                 Items = new List<Models.ProduitAdmin>();
-                Uri uri = new Uri(string.Format($"http://localhost:3000/admin/get-one-produit/{Uuid}"));
+                Uri uri = new Uri(string.Format($"https://get-evolutif.xyz/DrSmokeApi/admin/get-one-produit/{Uuid}"));
                 _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", oauthToken);
                 try
                 {
@@ -98,6 +98,7 @@ namespace DrSmokeAppAdmin.Pages
                 catch (Exception ex)
                 {
                     await DisplayAlert("Alert", ex.ToString(), "OK");
+                    await Navigation.PushAsync(new Pages.ConnexionPage());
                 }
             }
         }
@@ -244,7 +245,7 @@ namespace DrSmokeAppAdmin.Pages
             _client = new HttpClient();
            
             string oauthToken = await SecureStorage.Default.GetAsync("oauth_token");
-            Uri uri = new Uri(string.Format($"http://localhost:3000/admin/update-one-produit/{Uuid}"));
+            Uri uri = new Uri(string.Format($"https://get-evolutif.xyz/DrSmokeApi/admin/update-one-produit/{Uuid}"));
             _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", oauthToken);
             if (result != null)
             {
@@ -298,17 +299,18 @@ namespace DrSmokeAppAdmin.Pages
                     var apiResponse = JsonSerializer.Deserialize<Models.ReponseAPI>(responseContent);
                     if (response.IsSuccessStatusCode)
                     {
-                        await DisplayAlert("Alert", $"Test ${apiResponse.message} ", "ok");
+                        await DisplayAlert("Alert", $"{apiResponse.Message} ", "ok");
                         await Shell.Current.GoToAsync("..");
                     }
                     else
                     {
-                        await DisplayAlert("Alert", $"Test ${apiResponse.message} ", "ok");
+                        await DisplayAlert("Alert", $"{apiResponse.Message} ", "ok");
                     }
                 }
                 catch (Exception ex) 
                 {
                     await DisplayAlert("Alert", $"Une erreur est survenue: {ex.ToString()}", "OK");
+                    await Navigation.PushAsync(new Pages.ConnexionPage());
                 }
             }
             else
@@ -344,12 +346,13 @@ namespace DrSmokeAppAdmin.Pages
                 var apiResponse = JsonSerializer.Deserialize<Models.ReponseAPI>(responseContent);
                 if (response.IsSuccessStatusCode)
                 {
-                    await DisplayAlert("Alert", $"Test ${apiResponse.message} ", "ok");
+                    await DisplayAlert("Alert", $"{apiResponse.Message} ", "ok");
                     await Shell.Current.GoToAsync("..");
                 }
                 else
                 {
-                    await DisplayAlert("Alert", $"Test ${apiResponse.message} ", "ok");
+                    await DisplayAlert("Alert", $"{apiResponse.Message} ", "ok");
+                    await Navigation.PushAsync(new Pages.ConnexionPage());
                 }
 
             }

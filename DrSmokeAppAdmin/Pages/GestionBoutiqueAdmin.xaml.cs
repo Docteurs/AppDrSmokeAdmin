@@ -1,8 +1,5 @@
-using Microsoft.Maui.Controls;
-using Microsoft.Maui.Controls.PlatformConfiguration.AndroidSpecific;
-using System.Net.Http;
+using System.Diagnostics;
 using System.Net.Http.Headers;
-using System.Text;
 using System.Text.Json;
 
 namespace DrSmokeAppAdmin.Pages;
@@ -14,12 +11,12 @@ public partial class GestionBoutiqueAdmin : ContentPage
     public List<Models.UpdateBoutiqueAdmin> Boutique { get; private set; }
     public GestionBoutiqueAdmin()
 	{
-        InitializeComponent();
+		InitializeComponent();
         InfoMagasin();
-       
     }
     async private protected void InfoMagasin()
     {
+        base.OnAppearing();
         string oauthToken = await SecureStorage.Default.GetAsync("oauth_token");
         if (oauthToken == null || oauthToken == "")
         {
@@ -37,7 +34,7 @@ public partial class GestionBoutiqueAdmin : ContentPage
             WriteIndented = true
         };
         // string url = $"http://localhost:3000/admin/{oauthToken}";
-        Uri uri = new Uri(string.Format($"http://localhost:3000/admin/admin/{oauthToken}"));
+        Uri uri = new Uri(string.Format($"https://get-evolutif.xyz/DrSmokeApi/admin/admin/{oauthToken}"));
         _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", oauthToken);
         try
         {
@@ -47,43 +44,42 @@ public partial class GestionBoutiqueAdmin : ContentPage
             if (response.IsSuccessStatusCode)
             {
                 string content = await response.Content.ReadAsStringAsync();
-                try
-                {
+              
 
                     var items = JsonSerializer.Deserialize<List<Models.InfoGestionBoutiqueAdmin>>(content, _serializerOptions);
 
                     Items.AddRange(items);
                     foreach (var item in items)
                     {
-                        await DisplayAlert("Ok", item.Email, "Ok");
-                        VilleMagasin.Text = item.Ville;
-                        imgUrlMagasin.Source = item.ImgUrl;
+                      
+                        VilleMagasin.Text = item.Ville; 
+                        //imgUrlMagasin.Uri = item.ImgUrl; 
+                        imgUrlMagasin.Uri = new Uri($"{item.ImgUrl}"); 
                         adresseMagasin.Text = item.Adresse;
-                        prenomMagasin.Text= item.Prenom;
+                        prenomMagasin.Text = item.Prenom;
                         nomMagasin.Text = item.Nom;
                         emailMagasin.Text = item.Email;
                     }
-                    await DisplayAlert("Alert", "Requete sucesse", "OK");
-                }
-                catch (Exception ex)
-                {
-                    await DisplayAlert("Alert", $"Une erreur est survenue: {ex.ToString}", "Ok");
-                }
+                   
+               
             }
             else
             {
                 // Traitement à effectuer en cas de réussite de la requête
                 string responseContent = await response.Content.ReadAsStringAsync();
-
-                await DisplayAlert("Alert", responseContent, "ok");
+             
+                var apiResponse = JsonSerializer.Deserialize<Models.ReponseAPI>(responseContent);
+                await DisplayAlert("Alert", $"Test ${apiResponse.Message} ", "ok");
+                await Navigation.PushAsync(new Pages.ConnexionPage());
             }
         }
         catch (Exception ex)
         {
             await DisplayAlert("Alert", $"Une erreur est survenue: {ex.ToString()}", "OK");
+            await Navigation.PushAsync(new Pages.ConnexionPage());
         }
     }
-    public void FormUpdateBoutiqueIsVisible(object sender, EventArgs args)
+   /* public void FormUpdateBoutiqueIsVisible(object sender, EventArgs args)
     {
         FormIsVisible = !FormIsVisible;
         FormUpdateBoutique.IsVisible = FormIsVisible;
@@ -121,19 +117,19 @@ public partial class GestionBoutiqueAdmin : ContentPage
             await DisplayAlert("Alert", $"Une erreur est survenue : {ex.ToString()}", "OK");
         }
     }
-    public async void SendModificationProduit(object sender, EventArgs args) 
+    public async void SendModificationProduit(object sender, EventArgs args)
     {
         string Email = EntryEmailAdmin.Text;
         string Addresse = EntryAddresseAdmin.Text;
         string Nom = EntryNomAdmin.Text;
         string Prenom = EntryPrenomAdmin.Text;
-        bool LundiOuvert = CheckBoxLundi.IsChecked;
+*//*        bool LundiOuvert = CheckBoxLundi.IsChecked;
         bool MardiOuvert = CheckBoxMardi.IsChecked;
         bool MercrediOuvert = CheckBoxMercredi.IsChecked;
         bool JeudiOuvert = CheckBoxJeudi.IsChecked;
         bool VendrediOuvert = CheckBoxVendredi.IsChecked;
         bool SamediOuvert = CheckBoxSamedi.IsChecked;
-        bool DimancheOuvert = CheckBoxDimanche.IsChecked;
+        bool DimancheOuvert = CheckBoxDimanche.IsChecked;*//*
         string HoraireLundi = EntryHorraireLundi.Text;
         string HoraireMardi = EntryHorraireMardi.Text;
         string HoraireMercredi = EntryHorraireMercredi.Text;
@@ -143,17 +139,17 @@ public partial class GestionBoutiqueAdmin : ContentPage
         string HoraireDimanche = EntryHorraireDimanche.Text;
 
 
-        if (result != null && 
-            !string.IsNullOrEmpty(Email) && 
-            !string.IsNullOrEmpty(Addresse) && 
-            !string.IsNullOrEmpty(Nom) && 
-            !string.IsNullOrEmpty(Prenom) && 
+        if (result != null &&
+            !string.IsNullOrEmpty(Email) &&
+            !string.IsNullOrEmpty(Addresse) &&
+            !string.IsNullOrEmpty(Nom) &&
+            !string.IsNullOrEmpty(Prenom) &&
             !string.IsNullOrEmpty(HoraireLundi) &&
-            !string.IsNullOrEmpty(HoraireMardi) && 
-            !string.IsNullOrEmpty(HoraireMercredi) && 
-            !string.IsNullOrEmpty(HoraireJeudi) && 
-            !string.IsNullOrEmpty(HoraireVendredi) && 
-            !string.IsNullOrEmpty(HoraireSamedi) && 
+            !string.IsNullOrEmpty(HoraireMardi) &&
+            !string.IsNullOrEmpty(HoraireMercredi) &&
+            !string.IsNullOrEmpty(HoraireJeudi) &&
+            !string.IsNullOrEmpty(HoraireVendredi) &&
+            !string.IsNullOrEmpty(HoraireSamedi) &&
             !string.IsNullOrEmpty(HoraireDimanche))
         {
             HttpClient _client;
@@ -180,13 +176,13 @@ public partial class GestionBoutiqueAdmin : ContentPage
                 form.Add(new StringContent(Addresse), "Addresse");
                 form.Add(new StringContent(Nom), "Nom");
                 form.Add(new StringContent(Prenom), "Prenom");
-                form.Add(new StringContent(LundiOuvert.ToString()), "LundiOuvert");
+*//*                form.Add(new StringContent(LundiOuvert.ToString()), "LundiOuvert");
                 form.Add(new StringContent(MardiOuvert.ToString()), "MardiOuvert");
                 form.Add(new StringContent(MercrediOuvert.ToString()), "MercrediOuvert");
                 form.Add(new StringContent(JeudiOuvert.ToString()), "JeudiOuvert");
                 form.Add(new StringContent(VendrediOuvert.ToString()), "VendrediOuvert");
                 form.Add(new StringContent(SamediOuvert.ToString()), "SamediOuvert");
-                form.Add(new StringContent(DimancheOuvert.ToString()), "DimancheOuvert");
+                form.Add(new StringContent(DimancheOuvert.ToString()), "DimancheOuvert");*//*
                 form.Add(new StringContent(HoraireLundi), "HoraireLundi");
                 form.Add(new StringContent(HoraireMardi), "HoraireMardi");
                 form.Add(new StringContent(HoraireMercredi), "HoraireMercredi");
@@ -198,48 +194,64 @@ public partial class GestionBoutiqueAdmin : ContentPage
                 string oauthToken = await SecureStorage.Default.GetAsync("oauth_token");
 
                 // Créer une instance HttpClient
-            
-                    // Ajouter le jeton OAuth dans les en-têtes de la requête
-                    _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", oauthToken);
 
-                    // URL de destination
-                    Uri uri = new Uri($"http://localhost:3000/admin/admin/update-boutique/{oauthToken}");
+                // Ajouter le jeton OAuth dans les en-têtes de la requête
+                _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", oauthToken);
 
-                    // Envoyer la requête POST
-                    HttpResponseMessage response = await _client.PutAsync(uri, form);
+                // URL de destination
+                Uri uri = new Uri($"https://get-evolutif.xyz/DrSmokeApi/admin/admin/update-boutique/{oauthToken}");
 
-                    // Vérifier si la requête a réussi
-                    if (response.IsSuccessStatusCode)
-                    {
-                        string responseContent = await response.Content.ReadAsStringAsync();
-                        var apiResponse = JsonSerializer.Deserialize<Models.ReponseAPI>(responseContent);
-                        await DisplayAlert("Alert", $"Test ${apiResponse.message} ", "ok");
+                // Envoyer la requête POST
+                HttpResponseMessage response = await _client.PutAsync(uri, form);
+
+                // Vérifier si la requête a réussi
+                if (response.IsSuccessStatusCode)
+                {
+                    string responseContent = await response.Content.ReadAsStringAsync();
+                    var apiResponse = JsonSerializer.Deserialize<Models.ReponseAPI>(responseContent);
+                    await DisplayAlert("Alert", $"Test ${apiResponse.Message} ", "ok");
                     // Get current page
                     //var page = Navigation.NavigationStack.LastOrDefault();
 
                     // Load new page
                     //await Shell.Current.GoToAsync(nameof(Pages.StockAdmin), false);
-                        await Navigation.PushAsync(new Pages.GestionBoutiqueAdmin());
+                    await Navigation.PushAsync(new Pages.GestionBoutiqueAdmin());
                     // Remove old page
                     //Navigation.RemovePage(page);
-                    }
-                    else
-                    {
-                        // await DisplayAlert("Alert", $"Erreur lors de l'envoi des données : {response.StatusCode}", "OK");
-                        string responseContent = await response.Content.ReadAsStringAsync();
-                        var apiResponse = JsonSerializer.Deserialize<Models.ReponseAPI>(responseContent);
-                        await DisplayAlert("Alert", $"Test ${apiResponse.message} ", "ok");
-                    }
-                
+                }
+                else
+                {
+                    // await DisplayAlert("Alert", $"Erreur lors de l'envoi des données : {response.StatusCode}", "OK");
+                    string responseContent = await response.Content.ReadAsStringAsync();
+                    var apiResponse = JsonSerializer.Deserialize<Models.ReponseAPI>(responseContent);
+                    await DisplayAlert("Alert", $"Test ${apiResponse.Message} ", "ok");
+                }
+
             }
             catch (Exception ex)
             {
                 await DisplayAlert("Alert", $"Une exception est survenue : {ex.Message}", "OK");
+                await Navigation.PushAsync(new Pages.ConnexionPage());
             }
         }
         else
         {
             await DisplayAlert("Alert", "l'image, l'email, l'Adresse, le nom, le prenom et les horaire de la semaine sont obligatoire", "OK");
         }
+    }*/
+    public async void OnDeconnexion(object sender, EventArgs args)
+    {
+        try
+        {
+            SecureStorage.Default.RemoveAll();
+            await DisplayAlert("Alert", "Vous avez été déconnecter", "OK");
+            await Navigation.PushAsync(new Pages.ConnexionPage());
+        }
+        catch (Exception ex)
+        {
+            Debug.WriteLine($"Une erreur est survenue lors de la déconnexion : {ex.Message}");
+            // Vous pouvez afficher un message d'erreur ou effectuer d'autres actions de gestion des erreurs ici.
+        }
     }
+
 }

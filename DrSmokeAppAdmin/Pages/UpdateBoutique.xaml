@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="DrSmokeAppAdmin.Pages.UpdateBoutique"
+             Title="UpdateBoutique">
+    <ContentPage.Resources>
+        <Style TargetType="Button">
+            <Setter Property="BackgroundColor" Value="#1a6f36" />
+            <Setter Property="FontSize" Value="20" />
+            <Setter Property="TextColor" Value="White"/>
+        </Style>
+        <Style TargetType="Button" x:Key="Deconnexion">
+            <Setter Property="WidthRequest" Value="300"/>
+            <Setter Property="Margin" Value="10,10,10,10"/>
+            <Setter Property="FontSize" Value="20" />
+            <Setter Property="TextColor" Value="White"/>
+            <Setter Property="BackgroundColor" Value="Red"/>
+        </Style>
+        <Style TargetType="Label">
+            <Setter Property="FontFamily" Value="NunitoRegular" />
+            <Setter Property="FontAttributes" Value="Bold" />
+            <Setter Property="TextColor" Value="Black" />
+            <Setter Property="FontSize" Value="15" />
+            <Setter Property="Margin" Value="10,10,10,10" />
+        </Style>
+        <Style x:Key="Title" TargetType="Label">
+            <Setter Property="FontSize" Value="22" />
+            <Setter Property="FontAttributes" Value="Bold" />
+            <Setter Property="TextColor" Value="Black" />
+            <Setter Property="Margin" Value="10,10,10,10" />
+        </Style>
+    </ContentPage.Resources>
+    <ScrollView>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="2*" />
+                <RowDefinition  />
+                <RowDefinition  />
+                <RowDefinition  />
+                <RowDefinition  />
+                
+                <RowDefinition Height="100" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <Image Source="logodrsmoke_new.webp" WidthRequest="250" HeightRequest="250" HorizontalOptions="Center" />
+
+            <Frame Grid.Row="1" WidthRequest="300" Margin="10,10,10,10" BorderColor="#eae7e7">
+                <VerticalStackLayout>
+
+                    <Image>
+                        <Image.Source>
+                            <UriImageSource x:Name="imgUrlMagasin"
+                                         CacheValidity="10:00:00:00" />
+                        </Image.Source>
+                    </Image>
+                    <Label x:Name="VilleMagasin" Text="DR SMOKE" Style="{StaticResource Title}" />
+                    <Label x:Name="adresseMagasin" Text="" />
+                    <Label x:Name="prenomMagasin" Text="" />
+                    <Label x:Name="nomMagasin" Text="" />
+                    <Label x:Name="emailMagasin" Text="" />
+                    <Button Text="Gerer le magasin" />
+                </VerticalStackLayout>
+            </Frame>
+
+            <Frame Grid.Row="2" WidthRequest="300" Padding="20" CornerRadius="10" BorderColor="Green"  Margin="20, 20, 20, 20">
+                <Image x:Name="myImageControl"/>
+            </Frame>
+
+            <Frame WidthRequest="300" Grid.Row="3" BackgroundColor="#F5F5F5" Padding="20" CornerRadius="10" HasShadow="True" Margin="10, 10, 10, 10">
+                <Button Text="Sélectionner un fichier"
+            BackgroundColor="#DDDDDD"
+            TextColor="#333333"
+            Padding="10"
+            Clicked="PickAndShow"
+/>
+            </Frame>
+
+            <Frame WidthRequest="300" Grid.Row="4" Margin="10,10,10,10" BorderColor="#eae7e7">
+                <VerticalStackLayout>
+                    <!-- Entrée pour l'email -->
+                    <Entry  Placeholder="Email" x:Name="EntryEmailAdmin" Margin="0,0,0,10" />
+
+                    <!-- Entrée pour l'adresse -->
+                    <Entry  Placeholder="Adresse" x:Name="EntryAddresseAdmin" Margin="0,0,0,10" />
+
+                    <!-- Entrée pour le nom -->
+                    <Entry  Placeholder="Nom" x:Name="EntryNomAdmin" Margin="0,0,0,10" />
+
+                    <!-- Entrée pour le prénom -->
+                    <Entry  Placeholder="Prénom" x:Name="EntryPrenomAdmin" Margin="0,0,0,10" />
+
+                    <!-- Entrée pour l'horaire de Lundi -->
+                    <Entry Placeholder="ex: 8h a 18h" x:Name="EntryHorraireLundi" Margin="0,0,0,10" />
+
+                    <!-- Entrée pour l'horaire de Mardi -->
+                    <Entry Placeholder="8h a 18h" x:Name="EntryHorraireMardi" Margin="0,0,0,10" />
+
+                    <!-- Entrée pour l'horaire de Mercredi -->
+                    <Entry Placeholder="8h a 18h" x:Name="EntryHorraireMercredi" Margin="0,0,0,10" />
+
+                    <!-- Entrée pour l'horaire de Jeudi -->
+                    <Entry Placeholder="8h a 18h" x:Name="EntryHorraireJeudi" Margin="0,0,0,10" />
+
+                    <!-- Entrée pour l'horaire de Vendredi -->
+                    <Entry Placeholder="8h a 18h" x:Name="EntryHorraireVendredi" Margin="0,0,0,10" />
+
+                    <!-- Entrée pour l'horaire de Samedi -->
+                    <Entry Placeholder="8h a 18h" x:Name="EntryHorraireSamedi" Margin="0,0,0,10" />
+
+                    <!-- Entrée pour l'horaire de Dimanche -->
+                    <Entry Placeholder="8h a 18h" x:Name="EntryHorraireDimanche" Margin="0,0,0,10" />
+
+                    <!-- Bouton pour soumettre le formulaire -->
+                    <Button Text="Envoyer" Clicked="SendModificationProduit" Margin="0,20,0,0" />
+                </VerticalStackLayout>
+            </Frame>
+        </Grid>
+    </ScrollView>
+
+</ContentPage>

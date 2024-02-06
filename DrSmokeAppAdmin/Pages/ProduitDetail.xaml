@@ -3,8 +3,35 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="DrSmokeAppAdmin.Pages.ProduitDetail"
              Title="ProduitDetail">
+    <ContentPage.Resources>
+        <Style TargetType="Button">
+            <Setter Property="BackgroundColor" Value="#1a6f36" />
+            <Setter Property="FontSize" Value="20" />
+            <Setter Property="TextColor" Value="White"/>
+        </Style>
+        <Style TargetType="Button" x:Key="Deconnexion">
+            <Setter Property="WidthRequest" Value="300"/>
+            <Setter Property="Margin" Value="10,10,10,10"/>
+            <Setter Property="FontSize" Value="20" />
+            <Setter Property="TextColor" Value="White"/>
+            <Setter Property="BackgroundColor" Value="Red"/>
+        </Style>
+        <Style TargetType="Label">
+            <Setter Property="FontFamily" Value="NunitoRegular" />
+            <Setter Property="FontAttributes" Value="Bold" />
+            <Setter Property="TextColor" Value="Black" />
+            <Setter Property="FontSize" Value="15" />
+            <Setter Property="Margin" Value="10,10,10,10" />
+        </Style>
+        <Style x:Key="Title" TargetType="Label">
+            <Setter Property="FontSize" Value="22" />
+            <Setter Property="FontAttributes" Value="Bold" />
+            <Setter Property="TextColor" Value="Black" />
+            <Setter Property="Margin" Value="10,10,10,10" />
+        </Style>
+    </ContentPage.Resources>
     <ScrollView>
-        <Grid>
+        <Grid VerticalOptions="Center" Margin="10,10,10,10">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
@@ -47,112 +74,12 @@
                     <Label x:Name="PrixProduit20g" />
                     <Label x:Name="quantiteProduitDisponible" />
                     <Label x:Name="produitVisible" />
-                    <Button Text="Modifier le produit" Clicked="ModifiProduitIsVisible" />
+                    <Button Text="Modifier le produit" Clicked="GoToUpdateProduct" />
                 </StackLayout>
             </Frame>
 
 
-            <Frame
-                IsVisible="False"
-                Margin="20, 20, 20, 20"
-                Grid.Row="2"
-                BorderColor="Gray"
-                HorizontalOptions="Center"
-                VerticalOptions="Center"
-                CornerRadius="5"
-                WidthRequest="400"
-                x:Name="FormModifiProduit"
-                Padding="8">
-                <StackLayout>
-                    <Frame Padding="20" CornerRadius="10" BorderColor="Green"  Margin="20, 20, 20, 20">
-                        <Image x:Name="myImageControl"/>
-                    </Frame>
-
-                    <Frame BackgroundColor="#F5F5F5" Padding="20" CornerRadius="10" HasShadow="True" Margin="10, 10, 10, 10">
-                        <Button Text="Sélectionner un fichier"
-                        BackgroundColor="#DDDDDD"
-                        TextColor="#333333"
-                        Padding="10"
-                        Clicked="PickAndShow"
-                        />
-                    </Frame>
-
-                    <Entry x:Name="EntryNomProduit" Placeholder="Nom du produit" Margin="10, 10, 10, 10"/>
-                    <Picker x:Name="CategoriePicker" Margin="10, 10, 10, 10"
-                            Title="Selectionnez une categorie">
-                        <Picker.ItemsSource>
-                            <x:Array Type="{x:Type x:String}">
-                                <x:String>fleurs-cbd-indoor</x:String>
-                                <x:String>fleurs-cbd-greenhouse</x:String>
-                                <x:String>fleurs-cbd-outdoor</x:String>
-                                <x:String>moonrocks</x:String>
-                                <x:String>Fleurs PHC/H4CBD</x:String>
-                                <x:String>resines-cbd</x:String>
-                                <x:String>huiles-cbd</x:String>
-                                <x:String>infusions</x:String>
-                                <x:String>vaporisateurs</x:String>
-                                <x:String>cartouches-cbd-cigarette-electronique</x:String>
-                                <x:String>e-liquides-cbd</x:String>
-                                <x:String>pre-rolls</x:String>
-                                <x:String>feuille-a-rouler</x:String>
-                                <x:String>dr-drink</x:String>
-                                <x:String>stick-cbd</x:String>
-                                <x:String>bonbons-cbd</x:String>
-                            </x:Array>
-                        </Picker.ItemsSource>
-                    </Picker>
-                    
-                    <CheckBox x:Name="CheckBoxProduitVisible" IsChecked="true" />
-                    <Label Text="Produit visible">
-                        <Label.Triggers>
-                            <DataTrigger TargetType="Label"
-                                         Binding="{Binding Source={x:Reference checkBox}, Path=IsChecked}"
-                                         Value="true">
-                                <Setter Property="FontAttributes"
-                                        Value="Italic, Bold" />
-                                <Setter Property="FontSize"
-                                        Value="18" />
-                            </DataTrigger>
-                        </Label.Triggers>
-                    </Label>
-
-                    <CheckBox x:Name="CheckBoxProduitNonVisible" />
-                    <Label Text="Checke ce parametre rendra votre produit invisible au yeux des utilisateur">
-                        <Label.Triggers>
-                            <DataTrigger TargetType="Label"
-                                         Binding="{Binding Source={x:Reference checkBox}, Path=IsChecked}"
-                                         Value="true">
-                                <Setter Property="FontAttributes"
-                                        Value="Italic, Bold" />
-                                <Setter Property="FontSize"
-                                        Value="18" />
-                            </DataTrigger>
-                        </Label.Triggers>
-                    </Label>
-
-                    <Entry x:Name="EntryDescriptifProduit" Placeholder="Descriptif du produit" IsSpellCheckEnabled="false" Margin="10, 10, 10, 10" />
-                    <Entry x:Name="EntryQuantiteProduit" Placeholder="Quantite en grammes" Keyboard="Numeric"
-                            Text="{Binding IntegerValue, Mode=TwoWay}" Margin="10, 10, 10, 10" />
-
-
-                    <Entry Placeholder="Prix 1g" Keyboard="Numeric" x:Name="EntryPrix1g"
-                            Text="{Binding IntegerValue, Mode=TwoWay}" Margin="10, 10, 10, 10" />
-
-                    <Entry Placeholder="Prix 3g" Keyboard="Numeric" x:Name="EntryPrix3g"
-                            Text="{Binding IntegerValue, Mode=TwoWay}" Margin="10, 10, 10, 10" />
-
-                    <Entry Placeholder="Prix 5g" Keyboard="Numeric" x:Name="EntryPrix5g"
-                            Text="{Binding IntegerValue, Mode=TwoWay}" Margin="10, 10, 10, 10" />
-
-                    <Entry Placeholder="Prix 10g" Keyboard="Numeric" x:Name="EntryPrix10g"
-                            Text="{Binding IntegerValue, Mode=TwoWay}" Margin="10, 10, 10, 10" />
-
-                    <Entry Placeholder="Prix 20g" Keyboard="Numeric" x:Name="EntryPrix20g"
-                            Text="{Binding IntegerValue, Mode=TwoWay}" Margin="10, 10, 10, 10" />
-
-                    <Button Text="Modifier le produit" Margin="10, 10, 10, 10" Clicked="SendModificationProduit" />
-                </StackLayout>
-            </Frame>
+            
 
         </Grid>
     </ScrollView>

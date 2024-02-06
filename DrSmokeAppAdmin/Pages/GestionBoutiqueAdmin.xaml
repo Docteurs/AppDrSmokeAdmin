@@ -58,7 +58,7 @@
                     <Label x:Name="prenomMagasin" Text="" />
                     <Label x:Name="nomMagasin" Text="" />
                     <Label x:Name="emailMagasin" Text="" />
-                    <Button Text="Gerer le magasin" />
+                    <Button Text="Gerer le magasin" Clicked="GoToUpdateMagasin" />
                 </VerticalStackLayout>
             </Frame>
 

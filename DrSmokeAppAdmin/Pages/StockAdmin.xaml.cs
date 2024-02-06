@@ -17,8 +17,9 @@ public partial class StockAdmin : ContentPage
     {
         InitializeComponent();
         OnAppearing();
+        stylePage();
         //generateProduitWithNoProduit();
-   
+
     }
     protected override void OnAppearing()
     {
@@ -69,11 +70,11 @@ public partial class StockAdmin : ContentPage
 
                             grid.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
 
-                            var labelCategorie = new Label { Text = item.CategorieProduit.ToString(), FontFamily = "Pacifico" };
-                            var labelNom = new Label { Text = item.NomProduit, FontAttributes = FontAttributes.Bold, FontSize = 15, Margin = new Thickness(0, 5, 0, 5) };
-                            var labelDescriptif = new Label { Text = item.Descriptif, FontFamily = "Pacifico", WidthRequest = 250, HeightRequest = 250 };
-                            var labelQuantite = new Label { Text = item.Quantite + "g/En stock", FontFamily = "Pacifico", Margin = new Thickness(0, 5, 0, 5) };
-                            var labelPrix = new Label { Text = item.UnGprix + "€/1g", FontFamily = "Pacifico", Margin = new Thickness(0, 5, 0, 5) };
+                            var labelCategorie = new Label { Text = item.CategorieProduit.ToString(), FontFamily = "NunitoRegular", FontAttributes = FontAttributes.Bold, TextColor = Color.FromRgba(26, 111, 54, 255), FontSize = 15, Margin = new Thickness(10) };
+                            var labelNom = new Label { Text = item.NomProduit, FontFamily = "NunitoRegular", FontAttributes = FontAttributes.Bold, TextColor = Color.FromRgba(26, 111, 54, 255), FontSize = 15, Margin = new Thickness(10) };
+                            var labelDescriptif = new Label { Text = item.Descriptif, FontFamily = "NunitoRegular", FontAttributes = FontAttributes.Bold, TextColor = Color.FromRgba(26, 111, 54, 255), FontSize = 15, Margin = new Thickness(10) };
+                            var labelQuantite = new Label { Text = item.Quantite + "g/En stock", FontFamily = "NunitoRegular", FontAttributes = FontAttributes.Bold, TextColor = Color.FromRgba(26, 111, 54, 255), FontSize = 15, Margin = new Thickness(10) };
+                            var labelPrix = new Label { Text = item.UnGprix + "€/1g", FontFamily = "NunitoRegular", FontAttributes = FontAttributes.Bold, TextColor = Color.FromRgba(26, 111, 54, 255), FontSize = 15, Margin = new Thickness(10) };
                             var buttonVoirProduit = new Button { Text = "Voir le produit" };
                             buttonVoirProduit.Clicked += async (sender, e) =>
                             {
@@ -82,7 +83,7 @@ public partial class StockAdmin : ContentPage
                                 // Navigation.PushAsync(new Pages.AjoutProduit());
                                 var navigationParameter = new ShellNavigationQueryParameters
                                 {
-                               { "Uuid", item.Uuid }
+                                    { "Uuid", item.Uuid }
                                 };
                                 //await Shell.Current.GoToAsync($"//ProduitDetail", navigationParameter);
 
@@ -107,13 +108,13 @@ public partial class StockAdmin : ContentPage
 
                             var card = new Frame
                             {
-                                BorderColor = Colors.Black,
                                 Content = stackContent,
                                 CornerRadius = 10,
                                 Padding = new Thickness(10),
                                 HasShadow = true,
                                 HorizontalOptions = LayoutOptions.Center,
-                                VerticalOptions = LayoutOptions.Center
+                                VerticalOptions = LayoutOptions.Center,
+                                Margin = new Thickness(5,5,5,5),
                             };
 
                             grid.Add(card, 0, i + 1); // Add card to grid, starting from the second row
@@ -247,6 +248,34 @@ public partial class StockAdmin : ContentPage
         grid.Add(scrollView, 0, 1);
 
         Content = grid;
+    }
+
+    public void stylePage() 
+    {
+        // Style pour tous les boutons
+        Style buttonStyle = new Style(typeof(Button))
+        {
+            Setters = {
+        new Setter { Property = Button.BackgroundColorProperty, Value = Color.FromRgba(26, 111, 54, 255) },
+        new Setter { Property = Button.FontSizeProperty, Value = 20 },
+        new Setter { Property = Button.TextColorProperty, Value = Color.FromRgba(255, 255, 255, 255) }
+            }
+        };
+       
+
+       /* Style labelStyle = new Style(typeof(Label))
+        {
+            Setters = {
+        new Setter { Property = Label.FontFamilyProperty, Value = "NunitoRegular" },
+        new Setter { Property = Label.FontAttributesProperty, Value = FontAttributes.Bold },
+        new Setter { Property = Label.TextColorProperty, Value = Color.FromRgba(26, 111, 54, 255) },
+        new Setter { Property = Label.FontSizeProperty, Value = 15 },
+        new Setter { Property = Label.MarginProperty, Value = new Thickness(10) }
+            }
+        };
+        Resources.Add(labelStyle);*/
+        Resources.Add(buttonStyle);
+
     }
 
 

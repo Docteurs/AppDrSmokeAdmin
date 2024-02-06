@@ -42,7 +42,7 @@
 		<MauiIcon Include="Resources\AppIcon\logodrsmoke_new_logo.png" />
 		
 		<!-- Splash Screen -->
-		<MauiSplashScreen Include="Resources\Splash\logodrsmoke_new_logos.png" Color="#FBFBFB" />
+		<MauiSplashScreen Include="Resources\Splash\logodrsmoke_new_logos.png" Color="#FBFBFB"  />
 		<!-- <MauiSplashScreen Include="Resources\Splash\splash.svg" Color="#512BD4" BaseSize="128,128" /> -->
 
 		<!-- Images -->
@@ -61,6 +61,7 @@
 	  <None Remove="Resources\Images\ajouter_produit.png" />
 	  <None Remove="Resources\Images\commande.png" />
 	  <None Remove="Resources\Images\home_icon.png" />
+	  <None Remove="Resources\Images\icon_dr_smoke.png" />
 	  <None Remove="Resources\Images\logodrsmoke_new.webp" />
 	  <None Remove="Resources\Images\shop_icon.png" />
 	  <None Remove="Resources\Images\stock_icon.png" />
@@ -90,6 +91,12 @@
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Pages\StockAdmin.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Pages\UpdateBoutique.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Pages\UpdateProduit.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	</ItemGroup>

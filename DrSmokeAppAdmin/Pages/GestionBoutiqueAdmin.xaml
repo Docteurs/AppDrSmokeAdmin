@@ -58,6 +58,14 @@
                     <Label x:Name="prenomMagasin" Text="" />
                     <Label x:Name="nomMagasin" Text="" />
                     <Label x:Name="emailMagasin" Text="" />
+
+                    <Label x:Name="LundiHoraire" Text="" />
+                    <Label x:Name="MardiHoraire" Text="" />
+                    <Label x:Name="MercrediHoraire" Text="" />
+                    <Label x:Name="JeudiHoraire" Text="" />
+                    <Label x:Name="VendrediHoraire" Text="" />
+                    <Label x:Name="SamediHoraire" Text="" />
+                    <Label x:Name="DimancheHoraire" Text="" />
                     <Button Text="Gerer le magasin" Clicked="GoToUpdateMagasin" />
                 </VerticalStackLayout>
             </Frame>

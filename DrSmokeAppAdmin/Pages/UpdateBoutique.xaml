@@ -60,12 +60,19 @@
                     <Label x:Name="prenomMagasin" Text="" />
                     <Label x:Name="nomMagasin" Text="" />
                     <Label x:Name="emailMagasin" Text="" />
-                    <Button Text="Gerer le magasin" />
+
+                    <Label x:Name="LundiHoraire" Text="" />
+                    <Label x:Name="MardiHoraire" Text="" />
+                    <Label x:Name="MercrediHoraire" Text="" />
+                    <Label x:Name="JeudiHoraire" Text="" />
+                    <Label x:Name="VendrediHoraire" Text="" />
+                    <Label x:Name="SamediHoraire" Text="" />
+                    <Label x:Name="DimancheHoraire" Text="" />
                 </VerticalStackLayout>
             </Frame>
 
             <Frame Grid.Row="2" WidthRequest="300" Padding="20" CornerRadius="10" BorderColor="Green"  Margin="20, 20, 20, 20">
-                <Image x:Name="myImageControl"/>
+                <Image x:Name="myImageControl" WidthRequest="250"/>
             </Frame>
 
             <Frame WidthRequest="300" Grid.Row="3" BackgroundColor="#F5F5F5" Padding="20" CornerRadius="10" HasShadow="True" Margin="10, 10, 10, 10">

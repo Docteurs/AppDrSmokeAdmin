@@ -59,6 +59,13 @@ public partial class GestionBoutiqueAdmin : ContentPage
                         prenomMagasin.Text = item.Prenom;
                         nomMagasin.Text = item.Nom;
                         emailMagasin.Text = item.Email;
+                        LundiHoraire.Text = $"Lundi: {item.HoraireLundi}";
+                        MardiHoraire.Text = $"Mardi: {item.HoraireMardi}";
+                        MercrediHoraire.Text = $"Mercredi: {item.HoraireMercredi}";
+                        JeudiHoraire.Text = $"Jeudi: {item.HoraireJeudi}";
+                        VendrediHoraire.Text = $"Vendredi: {item.HoraireVendredi}";
+                        SamediHoraire.Text = $"Samedi: {item.HoraireSamedi}";
+                        DimancheHoraire.Text = $"Dimanche: {item.HoraireDimanche}";
                     }
                    
                
